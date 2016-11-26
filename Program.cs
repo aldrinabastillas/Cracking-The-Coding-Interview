@@ -1,44 +1,77 @@
 ﻿using System;
 using System.Reflection;
+using System.Collections.Generic;
 
-namespace CrackingTheCodingInterview
+namespace TextGui
 {
-	public class MainClass
+	public class TextGui
 	{
 		public static void Main(string[] args)
 		{
-			//Arrays.Run();
-			//LinkedLists.Run();
-			//HackerRank.Run();
-			//StackQueues.Run();
-			//HackerRankTraversals.Run();
-			//TreesAndGraphs.Run();
-			//Greedy.Run();
-			//Strings.Run();
-			//Medium.Run();
-			//RecursionDP.Run();
-			//SortingSearching.Run();
-			//FizzBuzz();
+			//Print list of chapters
+			List<Type> chapters = GetChapters();
+			for (int i = 0; i < chapters.Count; i++)
+			{
+				Console.WriteLine("{0}: {1}", i, chapters[i].Name);
+			}
+
+
+			//Select a chapter
+			Console.Write("Select a chapter number from 0 to {0}: ", chapters.Count - 1);
+			int chapter = 0;
+			while (!int.TryParse(Console.ReadLine(), out chapter) || 
+			       chapter >= chapters.Count || chapter < 0) 
+			{
+				Console.WriteLine("Invalid selection.");
+				Console.Write("Select a chapter number from 0 to {0}: ", chapters.Count - 1);
+			}
+
+
+			//Print list of exercises
+			Console.Clear();
+			Console.WriteLine("*** {0} Exercises ***", chapters[chapter].Name);
+			MethodInfo[] methods = chapters[chapter].GetMethods();
+			for (int i = 0; i < methods.Length; i++)
+			{
+				if (methods[i].IsStatic) //don't print out virtual methods
+				{
+					Console.WriteLine("{0}: {1}", i, methods[i].Name);
+				}
+			}
+
+
+			//Select an exercise
+			Console.Write("Select an exercise number from 0 to {0}: ",  methods.Length - 1);
+			int method = 0;
+			while (!int.TryParse(Console.ReadLine(), out method) ||
+				   method >= chapters.Count || method < 0)
+			{
+				Console.WriteLine("Invalid selection.");
+				Console.Write("Select an exercise number from 0 to {0}: ", methods.Length - 1);
+			}
+
+
+			//Execute an exercise
+			Console.Clear();
+			methods[method].Invoke(null, null);
+
 		}
 
-		public static void FizzBuzz()
+		private static List<Type> GetChapters()
 		{
-			for (int i = 1; i <= 100; i++)
+			var assembly = typeof(TextGui).Assembly;
+			var types = assembly.GetTypes();
+			List<Type> chapters = new List<Type>();
+
+			foreach (var type in types)
 			{
-				bool printNum = true;
-				if (i % 3 == 0) { 
-					Console.Write("Fizz");
-					printNum = false;
+				if (type.Namespace == "CrackingTheCodingInterview")
+				{
+					chapters.Add(type);
 				}
-				if (i % 5 == 0) { //don't put an else here!!
-					Console.Write("Buzz"); 
-					printNum = false;
-				} 
-				else if (printNum) { 
-					Console.Write(i); 
-				}
-				Console.Write(" ");
 			}
+
+			return chapters;
 		}
 	}
 }

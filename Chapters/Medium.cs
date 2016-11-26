@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Xml;
+using DataStructures;
 
 namespace CrackingTheCodingInterview
 {
@@ -298,17 +299,6 @@ namespace CrackingTheCodingInterview
 				else {
 					Console.WriteLine("{0} {1}", a, compliment);
 				}
-			}
-		}
-
-		internal class BiNode
-		{
-			public BiNode b1 { get; set; } //if BST, left node; if list, previous node 
-			public BiNode b2 { get; set; } //if BST, right node; if list, next node 
-			public int data { get; set;}
-			public BiNode(int d)
-			{
-				data = d;
 			}
 		}
 

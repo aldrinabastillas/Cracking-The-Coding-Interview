@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataStructures;
+
 namespace CrackingTheCodingInterview
 {
 	public class TreesAndGraphs

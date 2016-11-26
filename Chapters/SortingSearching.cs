@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using DataStructures;
+
 namespace CrackingTheCodingInterview
 {
 	public class SortingSearching
@@ -227,16 +229,7 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("Weight first: " + weightMax);
 		}
 
-		internal class Person
-		{
-			public int height { get; set; }
-			public int weight { get; set; }
-			public Person(int ht, int wt)
-			{
-				height = ht;
-				weight = wt;
-			}
-		}
+
 
 		public static void Q11_8()
 		{

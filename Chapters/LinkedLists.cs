@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DataStructures;
+
 namespace CrackingTheCodingInterview
 {
 	public class LinkedLists
@@ -149,7 +151,7 @@ namespace CrackingTheCodingInterview
 			//b.next.next = new Node<int>(2);
 
 			var c = Add(a, b);
-			c.Print();
+			c.PrintList();
 		}
 
 		public static Node<int> Add(Node<int> a, Node<int> b)
@@ -249,7 +251,7 @@ namespace CrackingTheCodingInterview
 			head.Insert(4);
 
 			Reverse(head);
-			head.Print();
+			head.PrintList();
 		}
 
 		private static void Reverse<T>(Node<T> head)
@@ -261,44 +263,8 @@ namespace CrackingTheCodingInterview
 				iter = iter.next;
 			}
 		}
-	}
 
-	public class Node<T>
-	{
-		public Node<T> next { get; set;}
-		public T data { get; set;}
-
-		public Node(T d)
-		{
-			data = d;
-		}
-
-		public Node()
-		{
-			
-		}
-
-		public void Insert(T data)
-		{
-			Node<T> iter = this;
-			while (iter.next != null)
-			{
-				iter = iter.next;
-			}
-			iter.next = new Node<T>(data);
-		}
-
-		public void Print()
-		{
-			Node<T> iter = this;
-			do
-			{
-				Console.Write(iter.data.ToString() + " ");
-				iter = iter.next;
-			}
-			while (iter != null);
-			Console.WriteLine();
-		}
 	}
 }
+
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataStructures;
 namespace CrackingTheCodingInterview
 {
 	public class StackQueues
@@ -91,11 +92,11 @@ namespace CrackingTheCodingInterview
 
 				//print progress
 				Console.Write("Source : ");
-				source.Print();
+				source.PrintStack();
 				Console.Write("Aux : ");
-				aux.Print();
+				aux.PrintStack();
 				Console.Write("Target : ");
-				target.Print();
+				target.PrintStack();
 				Console.WriteLine();
 
 				//move n-1 disks we left on aux onto target
@@ -175,123 +176,5 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine(shelter.DequeueAny().ToString());
 		}
 
-	}
-
-	public enum Species { Cat, Dog };
-	internal class Animal
-	{
-		public Species species { get; private set; }
-		public string name { get; set; }
-		public Animal(string name, Species species)
-		{
-			this.name = name;
-			this.species = species;
-		}
-		public override string ToString()
-		{
-			return name + " " + species;
-		}
-
-	}
-	internal class Shelter
-	{
-		Queue<Animal> cats = new Queue<Animal>();
-		Queue<Animal> dogs = new Queue<Animal>();
-		Queue<Animal> all = new Queue<Animal>();
-
-		public void Enqueue(Animal a)
-		{
-			all.Enqueue(a);
-			if (a.species == 0)
-			{
-				cats.Enqueue(a);
-			}
-			else {
-				dogs.Enqueue(a);
-			}
-		}
-
-		public Animal DequeueAny()
-		{
-			var animal = all.Dequeue();
-			while ((dogs.Count == 0 || animal.name != dogs.Peek().name) && 
-			       (cats.Count == 0 || animal.name != cats.Peek().name))
-			{
-				animal = all.Dequeue();
-			}
-
-			if (animal.species == Species.Cat)
-			{
-				cats.Dequeue();
-			}
-			else {
-				dogs.Dequeue();
-			}
-
-			return animal;
-		}
-
-		public Animal DequeueCat()
-		{
-			return cats.Dequeue();
-		}
-
-		public Animal DequeueDog()
-		{
-			return dogs.Dequeue();
-		}
-	}
-
-
-	public class MyStack<T>
-	{
-		private Node<T> top;
-
-		public MyStack(params T[] values)
-		{
-			foreach (T o in values)
-			{
-				this.Push(o);
-			}
-		}
-
-		public T Pop()
-		{
-			if (top != null)
-			{
-				T data = top.data;
-				top = top.next;
-				return data;
-			}
-			return default(T);
-		}
-
-		public T Peek()
-		{
-			return top.data;
-		}
-
-		public void Push(T data)
-		{
-			Node<T> t = new Node<T>(data);
-			t.next = top;
-			top = t;
-		}
-
-		public bool IsEmpty()
-		{
-			return top == null;
-		}
-
-		public void Print()
-		{
-			if (top != null)
-			{
-				top.Print();
-			}
-			else {
-				Console.WriteLine("<empty>");
-			}
-		}
 	}
 }

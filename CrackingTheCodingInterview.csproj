@@ -37,23 +37,37 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Arrays.cs" />
-    <Compile Include="LinkedLists.cs" />
     <Compile Include="HackerRank.cs" />
-    <Compile Include="StacksQueues.cs" />
     <Compile Include="HackerRankTraversals.cs" />
-    <Compile Include="TreesAndGraphs.cs" />
-    <Compile Include="Greedy.cs" />
-    <Compile Include="Strings.cs" />
-    <Compile Include="Medium.cs" />
-    <Compile Include="RecursionDP.cs" />
-    <Compile Include="Testing.cs" />
-    <Compile Include="SortingSearching.cs" />
-    <Compile Include="Properties\PhoneScreen.cs" />
+    <Compile Include="Chapters\Arrays.cs" />
+    <Compile Include="Chapters\Greedy.cs" />
+    <Compile Include="Chapters\LinkedLists.cs" />
+    <Compile Include="Chapters\Medium.cs" />
+    <Compile Include="Chapters\MorePractice.cs" />
+    <Compile Include="Chapters\RecursionDP.cs" />
+    <Compile Include="Chapters\SortingSearching.cs" />
+    <Compile Include="Chapters\StacksQueues.cs" />
+    <Compile Include="Chapters\Strings.cs" />
+    <Compile Include="Chapters\Testing.cs" />
+    <Compile Include="Chapters\TreesAndGraphs.cs" />
+    <Compile Include="DataStructures\Node.cs" />
+    <Compile Include="DataStructures\MyStack.cs" />
+    <Compile Include="DataStructures\TreeNode.cs" />
+    <Compile Include="DataStructures\Graph.cs" />
+    <Compile Include="DataStructures\GraphNode.cs" />
+    <Compile Include="DataStructures\TwoStackQueue.cs" />
+    <Compile Include="DataStructures\BiNode.cs" />
+    <Compile Include="DataStructures\Person.cs" />
+    <Compile Include="DataStructures\Shelter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="input02.txt" />
-    <None Include="input05.txt" />
+    <None Include="inputFiles\input02.txt" />
+    <None Include="inputFiles\input05.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Chapters\" />
+    <Folder Include="inputFiles\" />
+    <Folder Include="DataStructures\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

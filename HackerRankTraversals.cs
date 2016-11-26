@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using DataStructures;
 
 namespace CrackingTheCodingInterview
 {
@@ -231,99 +232,6 @@ namespace CrackingTheCodingInterview
 				astronauts.AddNode(temp[0]);
 				astronauts.AddNode(temp[1]);
 			}
-		}
-	}
-
-	public class TreeNode<T> 
-	{
-		public T data {get; set;}
-		public TreeNode<T> left {get; set;}
-		public TreeNode<T> right {get; set;}
-
-		public TreeNode(T obj)
-		{
-			data = obj;
-		}
-
-		public void AddLeft(T obj)
-		{
-			left = new TreeNode<T>(obj);
-		}
-
-		public void AddRight(T obj)
-		{
-			right = new TreeNode<T>(obj);
-		}
-	}
-
-	public class Graph
-	{
-		public Dictionary<int, GraphNode<int>> graph {get; set;}
-
-		//constructor
-		public Graph()
-		{
-			graph = new Dictionary<int, GraphNode<int>>();
-		}
-
-		//default weight is 0
-		public void AddNode(int id, int weight = 0)
-		{
-			if (!graph.ContainsKey(id))
-			{
-				graph.Add(id, new GraphNode<int>(id, weight));
-			}
-		}
-		public void AddUndirectedEdge(int parentId, int adjacentId, int weight = 0)
-		{
-			AddDirectedEdge(parentId, adjacentId, weight);
-
-			//also add a back pointer from adjacent to parent
-			graph[adjacentId].AddEdge(graph[parentId]); 
-		}
-
-		public void AddDirectedEdge(int parentId, int adjacentId, int weight = 0)
-		{
-			if (!graph.ContainsKey(parentId))
-			{
-				AddNode(parentId, weight);
-			}
-			if (!graph.ContainsKey(adjacentId))
-			{
-				AddNode(adjacentId, weight);
-			}
-
-			//pointer from parent to adjacent
-			graph[parentId].AddEdge(graph[adjacentId]);
-		}
-	}
-
-	public class GraphNode<T>
-	{
-		//Properties
-		public bool visited{ get; set;}
-		public int weight { get; set;}
-		public T data { get; set;}
-		public HashSet<GraphNode<T>> adjacent { get; set;}
-
-		//Constructors
-		public GraphNode(T value) : this(value, 0)
-		{
-		}
-
-		public GraphNode(T value, int w)
-		{
-			visited = false;
-			data = value;
-			adjacent = new HashSet<GraphNode<T>>();
-			weight = w;
-		}
-
-		//Methods
-		//add node to adjacent list
-		public void AddEdge(GraphNode<T> node)
-		{
-			adjacent.Add(node);
 		}
 	}
 }
