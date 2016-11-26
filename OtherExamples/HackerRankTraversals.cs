@@ -8,16 +8,11 @@ namespace CrackingTheCodingInterview
 {
 	public class HackerRankTraversals
 	{
-		public static void Run()
-		{
-			//DFSCellGrid();
-			BFSReach();
-			//BalancedTree();
-		}
-
+		#region Largest Region in Grid
 		//https://www.hackerrank.com/challenges/ctci-connected-cell-in-a-grid
 		public static void DFSCellGrid()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-connected-cell-in-a-grid");
 			//int n = Convert.ToInt32(Console.ReadLine());
 			//int m = Convert.ToInt32(Console.ReadLine());
 			int n = 4, m = 4;
@@ -81,10 +76,13 @@ namespace CrackingTheCodingInterview
 
 			return region;
 		}
+		#endregion
 
+		#region Is Binary Search Tree
 		//https://www.hackerrank.com/challenges/ctci-is-binary-search-tree
 		public static void BalancedTree()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-is-binary-search-tree");
 			var root = new TreeNode<int>(5);
 			root.AddLeft(2);
 			root.left.AddLeft(1);
@@ -128,12 +126,14 @@ namespace CrackingTheCodingInterview
 			}
 			return true;
 		}
+		#endregion
 
+		#region Djikstra's Algorithm
 		//https://www.hackerrank.com/challenges/ctci-bfs-shortest-reach
 		//https://www.hackerrank.com/domains/algorithms/graph-theory
-		public static void BFSReach()
+		public static void ShortestPath()
 		{
-			Console.WriteLine("BFS Reach");
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-bfs-shortest-reach");
 			//StreamReader f = new StreamReader("../input05.txt");
 			int q = Convert.ToInt32(Console.ReadLine());
 			for (int i = 0; i < q; i++)
@@ -216,11 +216,13 @@ namespace CrackingTheCodingInterview
 			}
 			return -1;
 		}
+		#endregion
 
 
 		//https://www.hackerrank.com/challenges/journey-to-the-moon
 		public static void Astronauts()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/journey-to-the-moon");
 			string[] line1 = Console.ReadLine().Split(' ');
 			//int n = Convert.ToInt32(line1[0]);
 			int pairs = Convert.ToInt32(line1[1]);

@@ -5,18 +5,7 @@ namespace CrackingTheCodingInterview
 	//Chapter 9 in CTCI
 	public class RecursionDP
 	{
-		public static void Run()
-		{
-			//FibMod();
-			//Q9_1();
-			//Q9_2();
-			//MaximumSubarrays();
-			//Factorial();
-			//Permutations();
-			//PermAna();
-			KnapsackMain();
-		}
-
+		#region Fibonacci Numbers
 		//https://www.hackerrank.com/challenges/fibonacci-modified
 		public static void FibMod()
 		{
@@ -45,10 +34,12 @@ namespace CrackingTheCodingInterview
 			}
 			return ans;
 		}
+		#endregion
 
+		#region Hopping Steps
 		//child running up n steps can hop either 1, 2, or 3 steps
 		//count possible ways to run up stairs
-		public static void Q9_1()
+		public static void Steps()
 		{
 			//n = 4: {3, 1}, {1, 3} , {sub answers 3, 1} , {1, sub answers 3} **7**
 
@@ -58,16 +49,17 @@ namespace CrackingTheCodingInterview
 
 			//n = 1: {1} **1**
 			Console.WriteLine("Question 9.1");
+			Console.WriteLine("count possible ways to run up stairs");
 			int n = Convert.ToInt32(Console.ReadLine());
 			BigInteger[] ans = new BigInteger[n];
 			for (int i = 1; i <= n; i++)
 			{
-				ans[i - 1] = Steps(i, ans);
+				ans[i - 1] = Q9_1(i, ans);
 			}
 			Console.WriteLine(ans[n-1]);
 		}
 
-		private static BigInteger Steps(int stairs, BigInteger[] ans)
+		private static BigInteger Q9_1(int stairs, BigInteger[] ans)
 		{
 			//Base Cases
 			if (stairs < 0) { return 0; }
@@ -77,14 +69,17 @@ namespace CrackingTheCodingInterview
 			if (ans[stairs - 1] != default(BigInteger)) { return ans[stairs - 1]; }
 
 			//Compute then cache result
-			ans[stairs-1] = Steps(stairs - 1, ans) + Steps(stairs - 2, ans) + Steps(stairs - 3, ans);
+			ans[stairs-1] = Q9_1(stairs - 1, ans) + Q9_1(stairs - 2, ans) + 
+				            Q9_1(stairs - 3, ans);
 			return ans[stairs - 1]; //return cached result
 		}
+		#endregion
 
+		#region Robot Grid
 		//number of paths to go from (0, 0) to (x, y)
 		//in a grid of size x by y, if
 		//robot can only move to the right and down
-		public static void Q9_2()
+		public static void RobotGrid()
 		{
 			Console.WriteLine("Question 9.2 - Robot Grid");
 			string[] line1 = Console.ReadLine().Split(' ');
@@ -92,12 +87,12 @@ namespace CrackingTheCodingInterview
 			int y = Convert.ToInt32(line1[1]);
 			int[,] grid = new int[x, y];
 
-			Robot(0, 0, x, y, grid);
+			Q9_2(0, 0, x, y, grid);
 			int ans = grid[x-1, y-1];
 			Console.WriteLine(ans);
 		}
 
-		private static void Robot(int currX, int currY, int endX, int endY, int[,] grid)
+		private static void Q9_2(int currX, int currY, int endX, int endY, int[,] grid)
 		{
 			if (currX >= endX || currY >= endY)
 			{
@@ -106,14 +101,16 @@ namespace CrackingTheCodingInterview
 			//increment current spot
 			grid[currX, currY]++;
 			//move right
-			Robot(currX + 1, currY, endX, endY, grid);
+			Q9_2(currX + 1, currY, endX, endY, grid);
 
 			//move down
-			Robot(currX, currY + 1, endX, endY, grid);
+			Q9_2(currX, currY + 1, endX, endY, grid);
 		}
+		#endregion
 
+		#region Magic Array Index
 		//given an sorted array, find magic index, where A[i] = i, if it exists
-		public static void Q9_3()
+		private static void Q9_3()
 		{
 			Console.WriteLine("Question 9.3 - Magic Array Index");
 			//int[] arr = { -1, 0, 1, 2, 4 };
@@ -121,14 +118,18 @@ namespace CrackingTheCodingInterview
 			//new left start is Math.Min(mid value, mid index - 1);
 			//new right start is Math.Max(mid value, mid index + 1);
 		}
+		#endregion
 
+		#region All Subsets of a Set
 		//return all subsets of a set
-		public static void Q9_4()
+		private static void Q9_4()
 		{
-			Console.WriteLine("Question 9.4 - Subsets");
+			Console.WriteLine("TODO: Question 9.4 - Subsets");
 		//	int[] arr = { 0, 1, 2, 3 };
 		}
+		#endregion
 
+		#region Maximum Subarray
 		//https://www.hackerrank.com/challenges/maxsubarray
 		public static void MaximumSubarrays()
 		{
@@ -170,7 +171,9 @@ namespace CrackingTheCodingInterview
 
 			Console.WriteLine("{0} {1}", contig_max, nonContig_max);
 		}
+		#endregion
 
+		#region Factorial
 		//non recursive
 		public static void Factorial()
 		{
@@ -183,7 +186,9 @@ namespace CrackingTheCodingInterview
 			}
 			Console.WriteLine(fact);
 		}
+		#endregion
 
+		#region Permutations
 		//output is all same length
 		//http://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
 		public static void Permutations()
@@ -262,8 +267,10 @@ namespace CrackingTheCodingInterview
 		//		orig = Swap(orig, start, i); //backtrack
 		//	}
 		//}
+		#endregion
 
-		public static void KnapsackMain()
+		#region Knapsack
+		public static void KnapsackProblem()
 		{
 			int T = Convert.ToInt32(Console.ReadLine());
 			for (int t = 0; t < T; t++)
@@ -322,6 +329,7 @@ namespace CrackingTheCodingInterview
 			}
 			return memo[n];
 		}
+		#endregion
 	}
 
 }

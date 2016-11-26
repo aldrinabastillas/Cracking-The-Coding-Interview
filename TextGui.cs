@@ -19,6 +19,7 @@ namespace TextGui
 			//Select a chapter
 			Console.Write("Select a chapter number from 0 to {0}: ", chapters.Count - 1);
 			int chapter = 0;
+			//validate integer input and bounds
 			while (!int.TryParse(Console.ReadLine(), out chapter) || 
 			       chapter >= chapters.Count || chapter < 0) 
 			{
@@ -31,29 +32,33 @@ namespace TextGui
 			Console.Clear();
 			Console.WriteLine("*** {0} Exercises ***", chapters[chapter].Name);
 			MethodInfo[] methods = chapters[chapter].GetMethods();
+			int methodCount = 0;
 			for (int i = 0; i < methods.Length; i++)
 			{
-				if (methods[i].IsStatic) //don't print out virtual methods
+				//don't print out private or virtual methods
+				if (methods[i].IsStatic && methods[i].IsPublic) 
 				{
-					Console.WriteLine("{0}: {1}", i, methods[i].Name);
+					Console.WriteLine("{0}: {1}", methodCount, methods[i].Name);
+					methodCount++;
 				}
 			}
 
 
 			//Select an exercise
-			Console.Write("Select an exercise number from 0 to {0}: ",  methods.Length - 1);
+			Console.Write("Select an exercise number from 0 to {0}: ",  methodCount - 1);
 			int method = 0;
 			while (!int.TryParse(Console.ReadLine(), out method) ||
 				   method >= chapters.Count || method < 0)
 			{
 				Console.WriteLine("Invalid selection.");
-				Console.Write("Select an exercise number from 0 to {0}: ", methods.Length - 1);
+				Console.Write("Select an exercise number from 0 to {0}: ", methodCount - 1);
 			}
 
 
 			//Execute an exercise
 			Console.Clear();
-			methods[method].Invoke(null, null);
+			// assume all exercises are static with no parameters
+			methods[method].Invoke(null, null); 
 
 		}
 

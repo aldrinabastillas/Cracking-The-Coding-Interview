@@ -5,20 +5,10 @@ namespace CrackingTheCodingInterview
 {
 	public class Strings
 	{
-		public static void Run()
-		{
-			//Alternating();
-			//Palindrome();
-			//TwoString();
-			//CaesarCipher();
-			//SherlockAnagrams();
-			SherlockValidString();
-		}
-
 		//https://www.hackerrank.com/challenges/making-anagrams
-		//Also in HackerRank.Anagrams()
 		public static void MakingAnagrams()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/making-anagrams");
 			string a = Console.ReadLine();
 			string b = Console.ReadLine();
 
@@ -56,8 +46,9 @@ namespace CrackingTheCodingInterview
 		}
 
 		//https://www.hackerrank.com/challenges/alternating-characters
-		public static void Alternating()
+		public static void AlternatingChars()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/alternating-characters");
 			int t = Convert.ToInt32(Console.ReadLine());
 			for (int i = 0; i < t; i++)
 			{
@@ -78,6 +69,7 @@ namespace CrackingTheCodingInterview
 		//https://www.hackerrank.com/challenges/palindrome-index
 		public static void Palindrome()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/palindrome-index");
 			int t = Convert.ToInt32(Console.ReadLine());
 			for (int u = 0; u < t; u++)
 			{
@@ -116,6 +108,7 @@ namespace CrackingTheCodingInterview
 		//https://www.hackerrank.com/challenges/two-strings
 		public static void TwoString()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/two-strings");
 			int t = Convert.ToInt32(Console.ReadLine());
 			for (int u = 0; u < t; u++)
 			{
@@ -155,6 +148,7 @@ namespace CrackingTheCodingInterview
 		public static void CaesarCipher()
 		{
 			//int n = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("https://www.hackerrank.com/challenges/caesar-cipher-1");
 			string s = Console.ReadLine();
 			int k = Convert.ToInt32(Console.ReadLine());
 			foreach (char c in s){
@@ -180,6 +174,7 @@ namespace CrackingTheCodingInterview
 		//https://www.hackerrank.com/challenges/sherlock-and-anagrams
 		public static void SherlockAnagrams()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/sherlock-and-anagrams");
 			int t = Convert.ToInt32(Console.ReadLine());
 			for (int u = 0; u < t; u++)
 			{
@@ -207,8 +202,8 @@ namespace CrackingTheCodingInterview
 
 		}
 
-		//dictionary performance of searching if key exists is too slow!! fails.
-		//instead use simple char[256] array
+		//dictionary performance of searching if key exists is too slow!! 
+		//fails tests
 		private static bool isAnagram(string a, string b)
 		{
 			var chars = new Dictionary<char, int>();
@@ -230,7 +225,7 @@ namespace CrackingTheCodingInterview
 			return true;
 		}
 
-		//much faster
+		//much faster uses simple char[256] array
 		private static bool isAnagram2(string a, string b)
 		{
 			int[] chars = new int[256];
@@ -255,6 +250,7 @@ namespace CrackingTheCodingInterview
 		//https://www.hackerrank.com/challenges/sherlock-and-valid-string
 		public static void SherlockValidString()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/sherlock-and-valid-string");
 			string s = Console.ReadLine();
 			//Lower case letters are [97-122]
 			int[] chars = new int[26];

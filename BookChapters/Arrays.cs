@@ -6,34 +6,21 @@ namespace CrackingTheCodingInterview
 {
 	public class Arrays
 	{
-		public static void Run()
+		#region Unique Chars
+		public static void UniqueChars()
 		{
-			//Console.WriteLine(Q1_1c("orange"));
-			//Console.WriteLine(Q1_1a("apple")); //should be false
-			//Console.WriteLine(Q1_1a("orange"));//true
+			Console.WriteLine("determine if a string has all unique chars");
+			Console.WriteLine(Q1_1a("apple")); //false
+			Console.WriteLine(Q1_1a("orange"));//true
 
-			//Console.WriteLine(Q1_1b("apple")); //false
-			//Console.WriteLine(Q1_1b("orange"));//true
+			Console.WriteLine(Q1_1b("apple")); //false
+			Console.WriteLine(Q1_1b("orange"));//true
 
-			//Console.WriteLine(Q1_2(new char[] { 'a', 'b', 'c', 'd', 'e' }));
-			//Console.WriteLine(Q1_2(new char[] { 'a', 'b', 'c', 'd' }));
-
-			//Console.WriteLine(Q1_3a("dog", "god"));
-			//Console.WriteLine(Q1_3a("dog", "car"));
-
-			//Console.WriteLine(Q1_3b("dog", "god"));
-			//Console.WriteLine(Q1_3b("dog", "car"));
-
-			//Console.WriteLine(Q1_4(new char[] { 'M', 'r', ' ', 'X', ' ', 'J', 'r', ' ', ' ', ' ', ' ' }, 7));
-
-			//Q1_5();
-
-			Q1_6();
+			Console.WriteLine(Q1_1c("orange"));
 		}
 
-		//implement an algorithm to determine if a string has all unique chars
 		//O(n) time and space
-		public static bool Q1_1a(string str)
+		private static bool Q1_1a(string str)
 		{
 			var set = new HashSet<char>();
 			foreach (char c in str)
@@ -47,7 +34,7 @@ namespace CrackingTheCodingInterview
 		//do it without additional data structures
 		//O(1) space and O(n^2) time 
 		//simple exhaustive search
-		public static bool Q1_1b(string str)
+		private static bool Q1_1b(string str)
 		{
 			for (int i = 0; i < str.Length; i++)
 			{
@@ -61,7 +48,7 @@ namespace CrackingTheCodingInterview
 
 		//use an array of size 256
 		//O(n) space, and O(n) time
-		public static bool Q1_1c(string str)
+		private static bool Q1_1c(string str)
 		{
 			bool[] chars = new bool[256]; //chars in ASCII extended char set
 			foreach (char c in str)
@@ -76,9 +63,17 @@ namespace CrackingTheCodingInterview
 			}
 			return true;
 		}
+		#endregion
 
-		//write a function to reverse a string
-		public static char[] Q1_2(char[] str)
+		#region String Reversal
+		public static void StringReversal()
+		{
+			Console.WriteLine("Write a function to reverse a string");
+			Console.WriteLine(Q1_2(new char[] { 'a', 'b', 'c', 'd', 'e' }));
+			Console.WriteLine(Q1_2(new char[] { 'a', 'b', 'c', 'd' }));
+		}
+
+		private static char[] Q1_2(char[] str)
 		{
 			for (int i = 0, j = str.Length - 1; i < str.Length / 2; i++, j--)
 			{
@@ -88,10 +83,21 @@ namespace CrackingTheCodingInterview
 			}
 			return str;
 		}
+		#endregion
 
-		//given 2 strings, decide if one is a permuation of the other
+		#region String Permutations
+		public static void StringPermutations()
+		{
+			Console.WriteLine("given 2 strings, decide if one is a permuation of the other");
+			Console.WriteLine(Q1_3a("dog", "god"));
+			Console.WriteLine(Q1_3a("dog", "car"));
+
+			Console.WriteLine(Q1_3b("dog", "god"));
+			Console.WriteLine(Q1_3b("dog", "car"));
+		}
+
 		//sort strings and see if they're equal
-		public static bool Q1_3a(string a, string b)
+		private static bool Q1_3a(string a, string b)
 		{
 			if (a.Length != b.Length)
 			{
@@ -117,7 +123,8 @@ namespace CrackingTheCodingInterview
 		//count of each character should be the same
 		//increment counts for a
 		//decrement counts for b, should not go below 0
-		public static bool Q1_3b(string a, string b)
+		//doesn't waste time for sorting
+		private static bool Q1_3b(string a, string b)
 		{
 			if (a.Length != b.Length)
 			{
@@ -139,11 +146,20 @@ namespace CrackingTheCodingInterview
 			}
 			return true;
 		}
+		#endregion
+
+		#region URLify String
+		public static void URLify()
+		{
+			Console.WriteLine("replace spaces in string with '%20'");
+			Console.WriteLine(Q1_4(new char[] { 'M', 'r', ' ', 'X', ' ', 'J', 'r', ' ', ' ', ' ', ' ' }, 7));
+		}
+
 
 		//replace all spaces with '%20' 
 		//str has extra space to hold new extra characters
 		//do the replacement in place
-		public static char[] Q1_4(char[] str, int length)
+		private static char[] Q1_4(char[] str, int length)
 		{
 			int count = 0;
 			for (int i = 0; i < length; i++)
@@ -169,19 +185,21 @@ namespace CrackingTheCodingInterview
 			}
 			return str;
 		}
+		#endregion
 
+		#region String Compression
 		//string compression
 		//aabcccccaaa -> a2b1c5a3
 		//abc -> abc //compression doesn't get smaller
-		public static void Q1_5()
+		public static void Compress()
 		{
 			Console.WriteLine("String Compression");
 			//string s = "aabcccccaaa";
 			string s = "abc";
-			Console.WriteLine(Compress(s));
+			Console.WriteLine(Q1_5(s));
 		}
 
-		private static string Compress(string s)
+		private static string Q1_5(string s)
 		{
 			var compress = new StringBuilder();
 			var chars = s.ToCharArray();
@@ -208,13 +226,15 @@ namespace CrackingTheCodingInterview
 				return s;
 			}
 		}
+		#endregion
 
-		public static void Q1_6()
+		#region Image Rotation
+		public static void ImageRotation()
 		{
 			Console.WriteLine("Image rotation");
 			int[,] image = { {1, 1, 1},
 							 {2, 2, 2},
-				             {3, 3, 3} };
+							 {3, 3, 3} };
 			int length = image.GetLength(0);
 			for (int i = 0; i < length / 2; i++)
 			{
@@ -223,7 +243,7 @@ namespace CrackingTheCodingInterview
 				for (int j = first; j < last; j++)
 				{
 					int offset = j - first;
-					int top = image[first,j];
+					int top = image[first, j];
 
 					image[first, j] = image[last - offset, first];
 					image[last - offset, first] = image[last, last - offset];
@@ -243,9 +263,11 @@ namespace CrackingTheCodingInterview
 				Console.WriteLine();
 			}
 		}
+		#endregion
+
 
 		//if an element in an MxN matrix is 0, it's entire row and column are set to 0
-		public static void Q1_7()
+		private static void Q1_7()
 		{
 			//iterate through all cells in matrix
 			//if you find a 0, flag the row and column 
@@ -254,7 +276,7 @@ namespace CrackingTheCodingInterview
 			//check the flag if row or column was flagged
 		}
 
-		public static void Q1_8()
+		private static void Q1_8()
 		{
 			//have isSubstring which determines if a is a substring of b
 			//check if s2 is a rotation of s1 using *only 1 call* to isSubstring

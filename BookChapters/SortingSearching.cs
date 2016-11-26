@@ -7,20 +7,13 @@ namespace CrackingTheCodingInterview
 {
 	public class SortingSearching
 	{
-		public static void Run()
-		{
-			//Q11_1();
-			//Q11_2();
-			//Q11_3();
-			Q11_7();
-		}
-
-		public static void Q11_1()
+		#region Merge Two Sorted Arrays
+		public static void MergedTwoSortedArrays()
 		{
 			//have 2 sorted arrays, A and B
 			//A has enough buffer to hold B
 			//merge B into A in sorted order
-			Console.WriteLine("Merge two sorted arrays");
+			Console.WriteLine("Q11.1: Merge two sorted arrays");
 			int[] A = { 2, 4, 6, 8, int.MinValue, int.MinValue, int.MinValue, int.MinValue };
 			int[] B = { 1, 3, 5, 7 };
 
@@ -42,15 +35,18 @@ namespace CrackingTheCodingInterview
 			//check answer
 			Console.WriteLine(string.Join(" ", A));
 		}
+		#endregion
 
-		public static void Q11_2()
+		#region Sort Anagram Array
+		public static void SortAnagramArray()
 		{
-			Console.WriteLine("Sort anagram array");
+			Console.WriteLine("Q11.2: Sort anagram array");
 			//sort an array of strings so that all anagrams are next to each other
 			string[] s = { "arc", "bab", "rca", "bba", "car" };
 			for (int i = 0; i < s.Length - 1; i++)
 			{
 				int toInsert = i + 1;
+				//simple bubble type sort
 				for (int j = i + 1; j < s.Length; j++)
 				{
 					if (IsAnagram(s[i], s[j])){
@@ -95,7 +91,9 @@ namespace CrackingTheCodingInterview
 			s[a] = s[b];
 			s[b] = temp;
 		}
+		#endregion
 
+		#region Find Index in Rotated/Sorted Array
 		public static void Q11_3()
 		{
 			//given a sorted array that has been rotated an unknown amount
@@ -145,8 +143,10 @@ namespace CrackingTheCodingInterview
 			}
 
 		}
+		#endregion
 
-		public static void Q11_4()
+		#region Sort 20GB File
+		private static void Q11_4()
 		{
 			//sort a 20GB file that has one string per line
 
@@ -156,8 +156,10 @@ namespace CrackingTheCodingInterview
 			//read each bucket file then write to a new file to
 			//reconstruct original file
 		}
+		#endregion
 
-		public static void Q11_5()
+		#region Sort Sparse Array
+		private static void Q11_5()
 		{
 			//given an array of sorted strings with random empty elements,
 			//find the index of a given string
@@ -167,10 +169,11 @@ namespace CrackingTheCodingInterview
 
 			//faster: use some kind of modified Binary Search
 			//move out from middle until you find a non-empty string
-
 		}
+		#endregion
 
-		public static void Q11_6()
+		#region Find Element in Sorted Matrix
+		private static void Q11_6()
 		{
 			//given an M x N matrix in which each row and each column is sorted, 
 			//write a method to find an element
@@ -192,8 +195,10 @@ namespace CrackingTheCodingInterview
 
 			return found;
 		}
+		#endregion
 
-		public static void Q11_7()
+		#region Circus Tower
+		public static void CircusTower()
 		{
 			Console.WriteLine("Circus Tower");
 			//sort by height
@@ -228,11 +233,6 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("Height first: " + heightMax);
 			Console.WriteLine("Weight first: " + weightMax);
 		}
-
-
-
-		public static void Q11_8()
-		{
-		}
+		#endregion
 	}
 }

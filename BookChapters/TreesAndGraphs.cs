@@ -6,18 +6,10 @@ namespace CrackingTheCodingInterview
 {
 	public class TreesAndGraphs
 	{
-		public static void Run()
-		{
-			//Q4_5();
-			//FindTreeMax();
-			//FindBSTMax();
-			//TreeHeight();
-			LCA();
-		}
-
+		#region Is Tree Balanced
 		//Check if a binary tree is balanced
 		//Practice this one again!
-		public static void Q4_1()
+		public static void IsTreeBalanced()
 		{
 			var root = new TreeNode<int>(3);
 			root.AddLeft(2);
@@ -56,15 +48,17 @@ namespace CrackingTheCodingInterview
 				return Math.Max(GetHeight(root.left), GetHeight(root.right)) + 1;
 			}
 		}
+		#endregion
 
-		public static void Q4_2()
+		private static void Q4_2()
 		{
 			HackerRankTraversals.BFSReach();
 		}
 
+		#region Is Binary Search Tree
 		//https://www.hackerrank.com/challenges/is-binary-search-tree
 		//Check if a binary tree is a binary search tree
-		public static void Q4_5()
+		public static void IsBinarySearchTree()
 		{
 			var root = new TreeNode<int>(5);
 			root.AddLeft(2);
@@ -93,13 +87,15 @@ namespace CrackingTheCodingInterview
 
 			return true;
 		}
+		#endregion
 
+		#region Find Max Element In Binary Tree
 		//find the max element in a tree
 		//not a binary search tree
 		//page 129 in algo book
-		public static void FindTreeMax()
+		public static void FindMaxTreeElement()
 		{
-			Console.WriteLine("Find Tree Max");
+			Console.WriteLine("Find Max Element in Binary Tree");
 			var root = new TreeNode<int>(5);
 			root.AddLeft(2);
 			root.left.AddRight(6);
@@ -139,12 +135,14 @@ namespace CrackingTheCodingInterview
 
 			return max;
 		}
+		#endregion
 
+		#region Find Max Element In Binary Search Tree
 		//find the max element in a binary search tree
 		//page 161 in algo book
-		public static void FindBSTMax()
+		public static void FindMaxBSTElement()
 		{
-			Console.WriteLine("Find BST Max");
+			Console.WriteLine("Find Max Element in Binary Search Tree");
 			var root = new TreeNode<int>(5);
 			root.AddLeft(2);
 			root.left.AddRight(4);
@@ -186,7 +184,9 @@ namespace CrackingTheCodingInterview
 
 			return max;
 		}
+		#endregion
 
+		#region Find Size of tree
 		//Problem 6, page 131
 		public static void TreeSize()
 		{
@@ -211,9 +211,11 @@ namespace CrackingTheCodingInterview
 			}
 			return TreeSize(root.left) + TreeSize(root.right) + 1;
 		}
+		#endregion
 
+		#region Get Tree Height
 		//Problem 10, page 132
-		public static void TreeHeight()
+		public static void GetTreeHeight()
 		{
 			Console.WriteLine("Get Tree Height");
 			var root = new TreeNode<int>(5);
@@ -238,11 +240,13 @@ namespace CrackingTheCodingInterview
 
 			return Math.Max(left, right) + 1;
 		}
+		#endregion
 
+		#region LCA in BST
 		//https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor
-		public static void LCA()
+		public static void LeastCommonAncestor()
 		{
-			Console.WriteLine("Least Common Ancestor");
+			Console.WriteLine("Least Common Ancestor (in a BST)");
 			var root = new TreeNode<int>(5);
 			root.AddLeft(2);
 			root.left.AddRight(4);
@@ -268,8 +272,9 @@ namespace CrackingTheCodingInterview
 				return LCA(root.left, a, b);
 			}
 		}
+		#endregion
 
-		public static void Q4_8()
+		private static void Q4_8()
 		{
 			//T1 is a tree with millions of nodes
 			//T2 is a tree with hundreds of nodes
@@ -285,12 +290,10 @@ namespace CrackingTheCodingInterview
 			//now compare each node of that subtree to T2
 		}
 
-		public static void Q4_9()
+		private static void Q4_9()
 		{
 			//print all paths in a tree that sum to a given value
 			//where a path can start/end anywhere in the tree
-
-
 		}
 
 		//private static List<int> TreeSum(List<int> list, TreeNode<int> node, int runSum, int sum){

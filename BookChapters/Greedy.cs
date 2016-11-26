@@ -3,12 +3,6 @@ namespace CrackingTheCodingInterview
 {
 	public class Greedy
 	{
-		public static void Run()
-		{
-			//TwoArrays();
-			PriyankaToys();
-		}
-
 		//https://www.hackerrank.com/challenges/two-arrays
 		public static void TwoArrays()
 		{

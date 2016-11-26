@@ -7,24 +7,9 @@ namespace CrackingTheCodingInterview
 {
 	public class HackerRank
 	{
-		public static void Run()
-		{
-			//ArrayRotation();
-			//Anagrams();
-			//IceCream();
-			//StackBrackets();
-			//QueueQuestion();
-			//Inversions();
-			//RansomNote();
-			//BubbleSort();
-			//Sherlock();
-			//Sherlock2();
-			//MissingNumbers();
-			TimeInWords();
-		}
-
 		public static void ArrayRotation()
 		{
+			Console.WriteLine("Array Rotation");
 			string[] tokens_n = Console.ReadLine().Split(' ');
 			int n = Convert.ToInt32(tokens_n[0]); //length
 			int k = Convert.ToInt32(tokens_n[1]); //left shift
@@ -45,8 +30,9 @@ namespace CrackingTheCodingInterview
 		}
 
 		//https://www.hackerrank.com/challenges/making-anagrams
-		static void Anagrams()
+		public static void Anagrams()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/making-anagrams");
 			string a = Console.ReadLine();
 			string b = Console.ReadLine();
 			//create a char[256]
@@ -73,107 +59,10 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine(count);
 		}
 
-		static void IceCream()
-		{
-			StreamReader f = new StreamReader("../input02.txt");
-			int t = Convert.ToInt32(f.ReadLine());
-			//int t = 1;
-			for (int a0 = 0; a0 < t; a0++)
-			{
-				int m = Convert.ToInt32(f.ReadLine()); //dollars
-													   //int m = 4;
-				int n = Convert.ToInt32(f.ReadLine()); //number of ice cream, length of array
-													   //int n = 5;
-				string[] a_temp = f.ReadLine().Split(' ');
-				int[] a = Array.ConvertAll(a_temp, Int32.Parse);
-				var indices = new Dictionary<int, List<int>>();
-				for (int i = 0; i < n; i++)
-				{
-					if (!indices.ContainsKey(a[i]))
-					{
-						indices.Add(a[i], new List<int>() { i });
-					}
-					else {
-						indices[a[i]].Add(i);
-					}
-				}
-
-				//int[] a = new int[] { 1, 4, 5, 3, 2 };
-				int[] b = new int[n];
-				Array.Copy(a, b, n);
-				Array.Sort(b); // 1 2 3 4 5
-				for (int i = 0; i < n; i++)
-				{
-					int buy1 = b[i];
-					int buy2 = m - buy1;
-					int targetIndex = binarySearchRec(b, buy2, i + 1, n - 1);
-					if (targetIndex != -1)
-					{
-						int[] ans = new int[2];
-						ans[0] = indices[buy1][0] + 1;
-						if (indices[buy1].Count == 1)
-						{
-							ans[1] = indices[buy2][0] + 1;
-						}
-						else {
-							ans[1] = indices[buy1][1] + 1;
-						}
-						Array.Sort(ans);
-						Console.WriteLine(ans[0] + " " + ans[1]);
-						//int buy1Index = binarySearchIter(a, buy1, 0, n - 1);
-						//int buy2Index = binarySearchIter(a, buy2, buy1Index + 1, n - 1);
-						//Console.WriteLine(buy1Index.ToString() + " " + buy2Index.ToString());
-						break;
-					}
-				}
-			}
-		}
-
-		//returns index of x on a *sorted* array
-		public static int binarySearchRec(int[] arr, int x, int left, int right)
-		{
-			if (left > right)
-			{
-				return -1;
-			}
-			int mid = (left + right) / 2;
-			if (arr[mid] == x)
-			{
-				return mid;
-			}
-			else if (x < arr[mid])
-			{
-				return binarySearchRec(arr, x, left, mid - 1);
-			}
-			else {
-				return binarySearchRec(arr, x, mid + 1, right);
-			}
-		}
-
-		//returns index of x on a *sorted* array
-		public static int binarySearchIter(int[] arr, int x, int left, int right)
-		{
-			while (left <= right)
-			{
-				int mid = (left + right) / 2;
-				if (arr[mid] == x)
-				{
-					return mid;
-				}
-				else if (x < arr[mid])
-				{
-					right = mid - 1;
-				}
-				else {
-					left = mid + 1;
-				}
-			}
-			return -1;
-		}
-
 		//https://www.hackerrank.com/challenges/ctci-balanced-brackets
-		public static void StackBrackets()
+		public static void BalancedBrackets()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-balanced-brackets");
 			var expressions = new List<string>();
 			expressions.Add("}][}}(}][))]"); //no
 			expressions.Add("[](){()}"); //yes
@@ -218,8 +107,9 @@ namespace CrackingTheCodingInterview
 		}
 
 		//https://www.hackerrank.com/challenges/ctci-queue-using-two-stacks
-		public static void QueueQuestion()
+		public static void TwoStackQueue()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-queue-using-two-stacks");
 			int q = Convert.ToInt32(Console.ReadLine());
 			var queue = new TwoStackQueue<int>();
 
@@ -252,8 +142,9 @@ namespace CrackingTheCodingInterview
 		}
 
 		//https://www.hackerrank.com/challenges/ctci-merge-sort
-		public static void Inversions()
+		public static void CountInversions()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-merge-sort");
 			int[] arr = new int[] { 2, 1, 3, 200, 100 };
 			int[] temp = new int[arr.Length];
 			Array.Copy(arr, temp, arr.Length);
@@ -267,7 +158,7 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("Total Inversions: " + inversions);
 		}
 
-		public static int mergesort(int[] array, int[] temp, int leftStart, int rightEnd, int inversions)
+		private static int mergesort(int[] array, int[] temp, int leftStart, int rightEnd, int inversions)
 		{
 			if (leftStart >= rightEnd)
 			{
@@ -280,7 +171,7 @@ namespace CrackingTheCodingInterview
 			                                  rightEnd, inversionsLeft + inversionsRight);
 		}
 
-		public static int mergeHalvesCountInversions(int[] array, int[] temp, int leftStart, 
+		private static int mergeHalvesCountInversions(int[] array, int[] temp, int leftStart, 
 		                                             int rightEnd, int inversions)
 		{
 			int leftEnd = (leftStart + rightEnd) / 2;
@@ -318,6 +209,7 @@ namespace CrackingTheCodingInterview
 		//https://www.hackerrank.com/challenges/ctci-ransom-note
 		public static void RansomNote()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/ctci-ransom-note");
 			//int m = 6; //# of words in magazine
 			//int n = 4; //# of words in ransom note
 			string line1 = "give me one grand today night night";
@@ -352,6 +244,7 @@ namespace CrackingTheCodingInterview
 
 		public static void BubbleSort()
 		{
+			Console.WriteLine("Bubble Sort");
 			//int n = Convert.ToInt32(Console.ReadLine());
 			string[] a_temp = "3 2 1".Split(' ');
 			int n = a_temp.Length;
@@ -384,15 +277,16 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("Last Element: " + a[n - 1]);
 		}
 
-		public static void Sherlock()
+		public static void SumHalves()
 		{
+			Console.WriteLine("Find index where both halves' sums are equal");
 			string[] line1 = "1 2 3 3".Split(' ');
 			int[] arr = Array.ConvertAll(line1, Int32.Parse);
 
 			Console.WriteLine(BinarySearchSum(arr, 0, arr.Length - 1));
 		}
 
-		static int BinarySearchSum(int[] arr, int low, int high)
+		private static int BinarySearchSum(int[] arr, int low, int high)
 		{
 			if (low > high)
 			{ //ran past each other
@@ -418,7 +312,7 @@ namespace CrackingTheCodingInterview
 			}
 		}
 
-		static int SumHalf(int[] arr, int low, int high)
+		private static int SumHalf(int[] arr, int low, int high)
 		{
 			int sum = 0;
 			for (int i = low; i <= high; i++)
@@ -429,8 +323,9 @@ namespace CrackingTheCodingInterview
 		}
 
 		//https://www.hackerrank.com/challenges/sherlock-and-array
-		static void Sherlock2()
+		public static void SherlockAndArray()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/sherlock-and-array");
 			int[] arr = new int[4] { 1, 2, 3, 3 };
 			int left = 0;
 			int right = arr.Length - 1;
@@ -458,8 +353,10 @@ namespace CrackingTheCodingInterview
 			}
 		}
 
-		static void MissingNumbers()
+		//https://www.hackerrank.com/challenges/missing-numbers
+		public static void MissingNumbers()
 		{
+			Console.WriteLine("https://www.hackerrank.com/challenges/missing-numbers");
 			int[] A = new int[3] { 1, 2, 3 };
 			int[] B = new int[6] { 1, 2, 4, 3, 3, 4 };
 			var counts = new Dictionary<int, int>();
@@ -509,7 +406,9 @@ namespace CrackingTheCodingInterview
 		static string[] tens = { "ten", "twenty" };
 		public static void TimeInWords()
 		{
+			Console.Write("Enter hours: ");
 			int h = Convert.ToInt32(Console.ReadLine());
+			Console.Write("Enter minutes: ");
 			int m = Convert.ToInt32(Console.ReadLine());
 
 			string minutes = "";

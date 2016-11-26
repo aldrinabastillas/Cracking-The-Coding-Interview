@@ -11,8 +11,6 @@ namespace CrackingTheCodingInterview
 	{
 		public static void Run()
 		{
-			//Q17_1(20, 9);
-			//Console.WriteLine(Q17_2());
 			//Q17_3();
 			//Q17_4();
 			//Q17_6();
@@ -21,7 +19,13 @@ namespace CrackingTheCodingInterview
 			Q17_13();
 		}
 
-		public static void Q17_1(int a, int b)
+		#region Swap Numbers
+		public static void SwapNumbers()
+		{
+			Q17_1(20, 9);
+		}
+
+		private static void Q17_1(int a, int b)
 		{
 			a = b - a;
 			b = b - a;
@@ -29,9 +33,15 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("a: " + a);
 			Console.WriteLine("b: " + b);
 		}
+		#endregion
 
+		#region Tic Tac Toe
 		//see if someone has won tic-tac-toe
-		public static bool Q17_2()
+		public static void TicTacToe(){
+			Console.WriteLine(Q17_2());
+		}
+
+		private static bool Q17_2()
 		{
 			Console.WriteLine("Tic-tac-toe");
 
@@ -77,7 +87,6 @@ namespace CrackingTheCodingInterview
 			if (IsWinner(diagBack)) { return true; }
 
 			return false;
-
 		}
 
 		private static bool IsWinner(char[] column)
@@ -93,17 +102,19 @@ namespace CrackingTheCodingInterview
 			}
 			return true;
 		}
+		#endregion
 
-		public static void Q17_3()
+		#region Verify Factorial
+		public static void VerifyFactorial()
 		{
 			Console.WriteLine("Number of trailing zeros in n!");
 			int n = Convert.ToInt32(Console.ReadLine());
 			Console.WriteLine("Expected answer: " + (n / 5));
-			Console.WriteLine("Actual answer: " + VerifyFactorial(n));
+			Console.WriteLine("Actual answer: " + Q17_3(n));
 		}
 
 		//brute force
-		private static int VerifyFactorial(int n)
+		private static int Q17_3(int n)
 		{
 			long factorial = 1;
 			for (int i = 1; i <= n; i++)
@@ -119,17 +130,19 @@ namespace CrackingTheCodingInterview
 			}
 			return zeros;
 		}
+		#endregion
 
-		public static void Q17_4()
+		#region Get Max
+		public static void GetMax()
 		{
 			//Don't use if-else statements or comparison operators
 			Console.WriteLine("Max of 2 numbers");
 			int a = Convert.ToInt32(Console.ReadLine());
 			int b = Convert.ToInt32(Console.ReadLine());
-			Console.WriteLine(GetMax(a, b));
+			Console.WriteLine(Q17_4(a, b));
 		}
 
-		private static int GetMax(int a, int b)
+		private static int Q17_4(int a, int b)
 		{
 			int diff = a - b;
 			int sign = ((diff >> 31) & 1) ^ 1; //1 for positive, 0 for negative
@@ -138,13 +151,10 @@ namespace CrackingTheCodingInterview
 			return a * sign + b * flip;
 
 		}
+		#endregion
 
-		public static void Q17_5()
-		{
-			Console.WriteLine("Mastermind");
-		}
-
-		public static void Q17_6()
+		#region Sorted Sub Array
+		public static void SortedSubArray()
 		{
 			//edit insertion sort
 			//save lowest and highest index that an element
@@ -153,10 +163,10 @@ namespace CrackingTheCodingInterview
 			//int[] arr = { 1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19 };
 			//int[] arr = { 1, 2, 3, 4};
 			int[] arr = { 4, 3, 2, 1};
-			InsertionSortMod(arr);
+			Q17_6(arr);
 		}
 
-		private static void InsertionSortMod(int[] arr)
+		private static void Q17_6(int[] arr)
 		{
 			int min = Int32.MaxValue;
 			int max = Int32.MinValue;
@@ -175,19 +185,12 @@ namespace CrackingTheCodingInterview
 			}
 			Console.WriteLine("{0} {1}", min, max);
 		}
+		#endregion
 
-		public static void Q17_7()
+		#region Largest Subarray Sum
+		public static void LargestSubarraySum()
 		{
-			Console.WriteLine("Print integer using words");
-			//1,234 = One Thousand, Two Hundred Thirty Four
-			//10,011 = Ten Thousand, Eleven
-			//111,111 = One hundred eleven thousand, one hundred eleven
-			//use an array for ones, tens, bigs
-		}
-
-		public static void Q17_8()
-		{
-			Console.WriteLine("Largest Subarray Sum");
+			Console.WriteLine("Q17.7: Largest Subarray Sum");
 			//int[] arr = {2, -8, 3, -2, 4, -10};
 			int[] arr = { -3, -1, -4 };
 			Console.WriteLine(Kadanes(arr));
@@ -211,48 +214,31 @@ namespace CrackingTheCodingInterview
 
 			return global;
 		}
+		#endregion
 
-		public static void Q17_9()
+		private static void Q17_9()
 		{
 			Console.WriteLine("Word Frequencies in a Book");
 			//given a word, find the frequency it shows up in a book
 			//create hash table, then increment frequencies
 		}
 
-		public static void Q17_10()
+		private static void Q17_11()
 		{
-			Console.WriteLine("XML compression");
-			//var map = new Dictionary<string, int>()
-			//{
-			//	{"family", 0},
-			//	{"person", 1},
-			//	{"firstName", 2},
-			//	{"lastName", 3},
-			//	{"state", 4}
-			//};
+			Console.WriteLine("TODO: Random Numbers");
 		}
 
-		public static void Q17_11()
+		#region Search Pair Sums
+		public static void SearchPairSums()
 		{
-			Console.WriteLine("Random Numbers");
-			//given rand(5), give rand(7)
-			Random rand = new Random();
-			int rand5 = rand.Next(0, 6);
-			int rand7 = rand.Next(rand5 - rand5, 7);
-			Console.WriteLine("{0} {1}", rand5, rand7);
-
-		}
-
-		public static void Q17_12()
-		{
-			Console.WriteLine("Pair sums");
+			Console.WriteLine("Search for pairs that sum to a given number");
 			//find all pairs in an array that sum to a given number
 			int[] arr = { 2, 5, 3, 4, 10, -3, -13, 20 };
-			//SearchPairSums(arr, 7);
 			HashPairSums(arr, 7);
+			Q17_12(arr, 7);
 		}
 
-		private static void SearchPairSums(int[] arr, int n)
+		private static void Q17_12(int[] arr, int n)
 		{
 			Array.Sort(arr); //O(nlogn)
 			foreach (var i in arr) //O(nlogn)
@@ -285,7 +271,7 @@ namespace CrackingTheCodingInterview
 			}
 		}
 
-		//simpler but O(n), slower than O(nlogn)
+		//simpler solution, but O(n) is slower than O(nlogn)
 		private static void HashPairSums(int[] arr, int n)
 		{
 			var pairs = new Dictionary<int, int>();
@@ -301,12 +287,14 @@ namespace CrackingTheCodingInterview
 				}
 			}
 		}
+		#endregion
 
-		//convert a BST to a doubly linked list
+		#region Convert BST to a doubly linked list
 		//keep items in order, and do in place
 		private static Queue<BiNode> q = new Queue<BiNode>();
 		public static void Q17_13()
 		{
+			Console.WriteLine("Convert BST to a doubly linked list.");
 			var root = new BiNode(4);
 			root.b1 = new BiNode(2);
 			root.b1.b1 = new BiNode(1);
@@ -366,6 +354,7 @@ namespace CrackingTheCodingInterview
 			}
 			return head;
 		}
+		#endregion
 
 	}
 }

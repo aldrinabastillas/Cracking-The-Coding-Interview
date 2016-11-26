@@ -5,15 +5,8 @@ namespace CrackingTheCodingInterview
 {
 	public class StackQueues
 	{
-		public static void Run()
-		{
-			//Q3_4();
-			//Q3_6();
-			Q3_7();
-		}
-
 		//Describe how you could use a single array to implement 3 stacks
-		public static void Q3_1(int size1, int size2, int size3)
+		private static void Q3_1(int size1, int size2, int size3)
 		{
 			//int[] stack = new int[size1 + size2 + size3];
 
@@ -30,7 +23,7 @@ namespace CrackingTheCodingInterview
 
 		//design a stack with a function min() that finds
 		//the minimum element in O(1) time
-		public static void Q3_2()
+		private static void Q3_2()
 		{
 			//brainstorm
 			//have another property in the class for min
@@ -57,7 +50,7 @@ namespace CrackingTheCodingInterview
 		//implement a set of stacks. when first stack gets too tall/full
 		//push onto another stack instead
 		//push and pop interfaces should behave the same
-		public static void Q3_3()
+		private static void Q3_3()
 		{
 			//keep a list of stacks
 			//Push() if last one is full, create a new stack and push there
@@ -68,9 +61,11 @@ namespace CrackingTheCodingInterview
 			//over to the left
 		}
 
+		#region Towers of Hanoi
 		//solve towers of hanoi
-		public static void Q3_4()
+		public static void TowersOfHanoi()
 		{
+			Console.WriteLine("Towers of Hanoi");
 			var source = new MyStack<int>(3, 2, 1); //largest on bottom
 			var aux = new MyStack<int>();
 			var target = new MyStack<int>();
@@ -103,17 +98,19 @@ namespace CrackingTheCodingInterview
 				move(n - 1, aux, target, source);
 			}
 		}
+		#endregion
 
-		public static void Q3_5()
+		private static void Q3_5()
 		{
-			//HackerRank.TwoStackQueue();
+			//var twoStackQueue = new TwoStackQueue<int>();
 		}
 
-		public static void Q3_6()
+		public static void SortStack()
 		{
 			//sort a stack in ascending order, with biggest items on top
 			//can use additional stack but not other data structures
-			//can't use count, just isEmpty()
+			//can't use Count, just isEmpty()
+			Console.WriteLine("Sort a stack");
 			var s = new Stack<int>(); s.Push(3); s.Push(6); s.Push(5); s.Push(4); s.Push(1); s.Push(2);
 			var minStack = new Stack<int>(); //smaller numbers on bottom
 			var maxStack = new Stack<int>(); //bigger numbers are on bottom 
@@ -159,7 +156,7 @@ namespace CrackingTheCodingInterview
 
 		}
 
-		public static void Q3_7()
+		public static void AnimalShelter()
 		{
 			//enqueue, dequeueAny, dequeueDog, dequeueCat
 			var shelter = new Shelter();
