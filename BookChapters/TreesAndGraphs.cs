@@ -52,7 +52,7 @@ namespace CrackingTheCodingInterview
 
 		private static void Q4_2()
 		{
-			HackerRankTraversals.BFSReach();
+			HackerRankTraversals.ShortestPath();
 		}
 
 		#region Is Binary Search Tree

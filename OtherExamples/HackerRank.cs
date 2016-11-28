@@ -444,5 +444,25 @@ namespace CrackingTheCodingInterview
 			return minutes;
 		}
 
+		public static void ArmyGame()
+		{
+			Console.WriteLine("https://www.hackerrank.com/contests/w26/challenges/game-with-cells");
+			string[] tokens_n = Console.ReadLine().Split(' ');
+			int n = Convert.ToInt32(tokens_n[0]);
+			int m = Convert.ToInt32(tokens_n[1]);
+
+			int longer = Math.Max(n, m);
+			int shorter = Math.Min(n, m);
+
+			int rows = (int)Math.Ceiling(longer / 2d);
+			int cols = 0;
+			if (shorter > 2)
+			{
+				cols = (int)Math.Ceiling(shorter / 2d);
+			}
+			Console.WriteLine("Rows: " + rows);
+			Console.WriteLine("Cols: " + cols);
+		}
+
 	} //end class
 } //end namespace
