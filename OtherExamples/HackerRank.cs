@@ -59,6 +59,7 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine(count);
 		}
 
+		#region Balanced Brackets
 		//https://www.hackerrank.com/challenges/ctci-balanced-brackets
 		public static void BalancedBrackets()
 		{
@@ -105,6 +106,7 @@ namespace CrackingTheCodingInterview
 			}
 			return right.Count == 0; //if we got this far, should be empty
 		}
+		#endregion
 
 		//https://www.hackerrank.com/challenges/ctci-queue-using-two-stacks
 		public static void TwoStackQueue()
@@ -141,6 +143,7 @@ namespace CrackingTheCodingInterview
 			}
 		}
 
+		#region Count Inversions
 		//https://www.hackerrank.com/challenges/ctci-merge-sort
 		public static void CountInversions()
 		{
@@ -205,6 +208,7 @@ namespace CrackingTheCodingInterview
 
 			return inversions;
 		}
+		#endregion
 
 		//https://www.hackerrank.com/challenges/ctci-ransom-note
 		public static void RansomNote()
@@ -277,6 +281,7 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("Last Element: " + a[n - 1]);
 		}
 
+		#region SumHalves
 		public static void SumHalves()
 		{
 			Console.WriteLine("Find index where both halves' sums are equal");
@@ -321,6 +326,7 @@ namespace CrackingTheCodingInterview
 			}
 			return sum;
 		}
+		#endregion
 
 		//https://www.hackerrank.com/challenges/sherlock-and-array
 		public static void SherlockAndArray()
@@ -395,6 +401,7 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine(string.Join(" ", sortedAns));
 		}
 
+		#region Time indexer Words
 		//https://www.hackerrank.com/challenges/the-time-in-words
 		static string[] ones = {"one", "two", "three", "four", "five",
 						 "six", "seven", "eight", "nine", "ten"};
@@ -443,6 +450,7 @@ namespace CrackingTheCodingInterview
 			else if (m == 30) { minutes = "half"; }
 			return minutes;
 		}
+		#endregion
 
 		public static void ArmyGame()
 		{
@@ -464,5 +472,120 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("Cols: " + cols);
 		}
 
+		#region BestDivisor
+		public static void BestDivisor()
+		{
+			Console.WriteLine("https://www.hackerrank.com/contests/w26/challenges/best-divisor");
+			Console.Write("Enter n: ");
+			int n = Convert.ToInt32(Console.ReadLine());
+
+			HashSet<int> divisors = GetDivisors(n);
+
+			int maxSum = 1; //sum of digits of divisor
+			int maxDivisor = 1;
+
+			List<int> sums = new List<int>();
+			foreach (var div in divisors)
+			{
+				int sum = GetSum(div);
+				sums.Add(sum);
+				if (sum > maxSum)
+				{
+					maxSum = sum;
+					maxDivisor = div;
+				}
+				else if (sum == maxSum && div < maxDivisor)
+				{
+					maxDivisor = div;
+				}
+
+			}
+
+			Console.WriteLine(maxDivisor);
+		}
+
+		private static HashSet<int> GetDivisors(int n)
+		{
+			var divisors = new HashSet<int>(); //ensure no duplicates
+
+			for (int i = 1; i < n / 2; i++)
+			{
+				if (n % i == 0)
+				{
+					divisors.Add(i);
+					divisors.Add(n / i);
+				}
+			}
+			return divisors; 
+		}
+
+		private static int GetSum(int n)
+		{
+			//int sum = n % 10; //ones place
+			//int place = 10;  //start at tens place
+			//while ((n / place) % 10 != 0)
+			//{
+			//	sum += n / place;
+			//	place *= 10;
+			//}
+			//return sum;
+
+			int sum = 0;
+			string s = n.ToString();
+			foreach (char c in s)
+			{
+				//int num = int.Parse(c.ToString());
+				sum += (int)Char.GetNumericValue(c);
+			}
+
+			return sum;
+		}
+
+		#endregion
+
+		#region Music on the Street
+		public static void StreetMusic()
+		{
+			Console.WriteLine("https://www.hackerrank.com/contests/w26/challenges/street-parade-1");
+			int B = Convert.ToInt32(Console.ReadLine());
+			int[] borders = Array.ConvertAll(Console.ReadLine().Split(' '), Int32.Parse);
+			string[] line3 = Console.ReadLine().Split(' ');
+			int miles = Convert.ToInt32(line3[0]);
+			int hMin = Convert.ToInt32(line3[1]);
+			int hMax = Convert.ToInt32(line3[2]);
+
+			//find length of border segments
+			int[] diffs = new int[B - 1];
+			for (int i = 0; i <= diffs.Length - 1; i++)
+			{
+				diffs[i] = borders[i + 1] - borders[i];
+			}
+
+			int start = borders[0];
+			int sum = 0;
+			for (int i = 0; i < diffs.Length; i++)
+			{
+				if (sum + diffs[0] > miles || //check bounds
+				   diffs[0] > hMax || diffs[0] < hMin)
+				{
+					sum = 0; //reset counters
+					start = borders[i + 1];
+				}
+				else if (sum + diffs[0] <= miles)
+				{
+					sum += diffs[0];
+				}
+				else if (sum == miles)
+				{
+					break;
+				}
+			}
+
+			if (sum < miles){
+				start = start - ((miles - sum) / 2);
+			}
+			Console.WriteLine(start);
+		}
+		#endregion
 	} //end class
 } //end namespace

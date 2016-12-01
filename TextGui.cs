@@ -48,7 +48,7 @@ namespace TextGui
 			Console.Write("Select an exercise number from 0 to {0}: ",  methodCount - 1);
 			int method = 0;
 			while (!int.TryParse(Console.ReadLine(), out method) ||
-				   method >= chapters.Count || method < 0)
+				   method >= methods.Length || method < 0)
 			{
 				Console.WriteLine("Invalid selection.");
 				Console.Write("Select an exercise number from 0 to {0}: ", methodCount - 1);
