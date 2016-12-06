@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using DataStructures;
+using System;
 using System.Collections.Generic;
-using DataStructures;
 
 namespace CrackingTheCodingInterview
 {
-	public class HackerRank
+    public class HackerRank
 	{
 		public static void ArrayRotation()
 		{
@@ -586,6 +585,7 @@ namespace CrackingTheCodingInterview
 			}
 			Console.WriteLine(start);
 		}
+<<<<<<< HEAD
 		#endregion
 
 		#region
@@ -646,4 +646,90 @@ namespace CrackingTheCodingInterview
 		}
 		#endregion
 	} //end class
+=======
+        #endregion
+
+        #region Smith Numbers
+        //https://www.hackerrank.com/challenges/identify-smith-numbers
+        public static void SmithNumbers()
+        {
+            Console.WriteLine("https://www.hackerrank.com/challenges/identify-smith-numbers");
+            Console.Write("Enter n: ");
+            int n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(SmithNumbers(n));
+        }
+       
+        /// <summary>
+        /// Return 1 if sum of n's digits equals sum of n's prime factors
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private static int SmithNumbers(int n)
+        {
+            int digitSum = SumOfDigits(n);
+            int factorSum = SumOfPrimeFactors(n);
+            return (digitSum == factorSum) ? 1 : 0;
+        }
+
+        /// <summary>
+        /// Return the sum of the digits in each place of n
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private static int SumOfDigits(int n)
+        {
+            if(n >= 0 && n < 10)
+            {
+                return n;
+            }
+
+            string s = n.ToString();
+            int digitSum = 0;
+            foreach (char c in s)
+            {
+                digitSum += (int)Char.GetNumericValue(c);
+            }
+            return digitSum;
+        }
+
+        /// <summary>
+        /// Return the sum of n's prime factors, excluding 1
+        /// 378 = 2 x 3 x 3 x 3 x 7 
+        /// return 2 + 3 + 3 + 3 + 7
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private static int SumOfPrimeFactors(int n)
+        {
+            if(n == 1)
+            {
+                return 0;
+            }
+
+            int sum = 0;
+            var factors = new List<int>(); //for debugging
+            int i = 2;
+            int toFactor = n;
+            while(i <= (int)Math.Sqrt(toFactor))
+            {
+                if (toFactor % i == 0)
+                {
+                    factors.Add(i);
+                    toFactor = toFactor / i; //change the number to factor
+                    sum += SumOfDigits(i);
+                    i = 2; //reset iterator back to 2
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            sum += SumOfDigits(toFactor); //sum up digits of what ever is remaining
+
+            return sum;
+        }
+        #endregion
+
+    } //end class
+>>>>>>> origin/master
 } //end namespace

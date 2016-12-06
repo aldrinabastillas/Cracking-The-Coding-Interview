@@ -58,8 +58,10 @@ namespace TextGui
 			//Execute an exercise
 			Console.Clear();
 			// assume all exercises are static with no parameters
-			methods[method].Invoke(null, null); 
+			methods[method].Invoke(null, null);
 
+            Console.Write("\nPress any key to exit: ");
+            Console.ReadKey();
 		}
 
 		private static List<Type> GetChapters()
