@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using DataStructures;
+using System;
 using System.Linq;
-using DataStructures;
 
 namespace CrackingTheCodingInterview
 {
-	public class SortingSearching
+    public class SortingSearching
 	{
 		#region Merge Two Sorted Arrays
 		public static void MergedTwoSortedArrays()
@@ -94,7 +93,7 @@ namespace CrackingTheCodingInterview
 		#endregion
 
 		#region Find Index in Rotated/Sorted Array
-		public static void Q11_3()
+		public static void FindRotatedArrayElement()
 		{
 			//given a sorted array that has been rotated an unknown amount
 			//find the index of an element in the array
