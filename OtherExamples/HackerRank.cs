@@ -585,7 +585,6 @@ namespace CrackingTheCodingInterview
 			}
 			Console.WriteLine(start);
 		}
-<<<<<<< HEAD
 		#endregion
 
 		#region
@@ -645,9 +644,6 @@ namespace CrackingTheCodingInterview
 			return (b > 0) ? b : 1;
 		}
 		#endregion
-	} //end class
-=======
-        #endregion
 
         #region Smith Numbers
         //https://www.hackerrank.com/challenges/identify-smith-numbers
@@ -731,5 +727,4 @@ namespace CrackingTheCodingInterview
         #endregion
 
     } //end class
->>>>>>> origin/master
 } //end namespace
