@@ -587,5 +587,63 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine(start);
 		}
 		#endregion
+
+		#region
+		/// <summary>
+		/// Uses the Kutakka equation
+		/// https://en.wikipedia.org/wiki/Ku%E1%B9%AD%E1%B9%ADaka
+		/// </summary>
+		public static void SatisfactoryPairs()
+		{
+			Console.WriteLine("https://www.hackerrank.com/contests/w26/challenges/pairs-again");
+			Console.WriteLine("solve ax + by = c, given c");
+			Console.Write("Enter c: ");
+			int c = Convert.ToInt32(Console.ReadLine());
+
+			int numPairs = 0;
+			var pairs = new List<string>();
+			for (int a = 1; a < c - 1; a++)
+			{
+				for (int b = 2; b < c; b++)
+				{
+					//check bounds
+					if (a != b && a + b <= c)
+					{
+						int gcd = GCD(a, b);
+						if (c % gcd == 0)
+						{
+							numPairs++;
+							pairs.Add("(" + a + ", " + b + ")");
+						}
+					}
+				}
+			}
+
+			Console.WriteLine(numPairs);
+			foreach (var pair in pairs)
+			{
+				Console.WriteLine(pair);
+			}
+		}
+
+		/// <summary>
+		/// Greatest common divisor using Euclid's algorithm
+		/// Default is 1 if none greater than 1 exists
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		private static int GCD(int x, int y)
+		{
+			int a = Math.Max(x, y);
+			int b = Math.Min(x, y);
+			while (b > 0 && a % b != 0)
+			{
+				a = b;
+				b = a % b;
+			}
+
+			return (b > 0) ? b : 1;
+		}
+		#endregion
 	} //end class
 } //end namespace
