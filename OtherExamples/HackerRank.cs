@@ -1,6 +1,7 @@
 ﻿using DataStructures;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CrackingTheCodingInterview
 {
@@ -724,7 +725,6 @@ namespace CrackingTheCodingInterview
 
             return sum;
         }
-        #endregion
-
+		#endregion
     } //end class
 } //end namespace

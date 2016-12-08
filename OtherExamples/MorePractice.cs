@@ -255,5 +255,44 @@ namespace CrackingTheCodingInterview
 			return justify.ToArray();
 		}
 		#endregion
+	
+		#region Place Digits
+		public static void PlaceDigits()
+		{
+			Console.WriteLine("Write digit in each place.");
+			Console.Write("Enter n: ");
+			int n = 0;
+			while (!Int32.TryParse(Console.ReadLine(), out n))
+			{
+				Console.Write("Invalid input, try again: ");
+			}
+			Console.WriteLine(PlaceDigits(n));
+
+		}
+
+		private static string PlaceDigits(int n)
+		{
+			var digits = new StringBuilder();
+
+			int place = 1;
+			//iterate until power of 10 is larger than n
+			while (place * 10 <= n)
+			{
+				place *= 10; 
+			}
+
+			while (place >= 1)
+			{
+				int digit = n / place;
+				digits.Append(digit.ToString() + " ");
+
+				//iterate
+				n %= place;
+				place /= 10;
+			}
+			return digits.ToString();
+		}
+		#endregion
+	
 	}
 }

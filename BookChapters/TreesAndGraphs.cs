@@ -23,16 +23,15 @@ namespace CrackingTheCodingInterview
 
 		private static bool IsBalanced(TreeNode<int> root)
 		{
-			int leftHeight = 0, rightHeight = 0;
-			if (root.left != null)
+			if (root == null)
 			{
-				leftHeight = GetHeight(root.left);
+				return true; //base case!!
 			}
-			if (root.right != null)
-			{
-				rightHeight = GetHeight(root.right);
-			}
-			if (Math.Abs(leftHeight - rightHeight) <= 1)
+
+			int leftHeight = GetHeight(root.left);
+			int rightHeight = GetHeight(root.right);
+
+			if (Math.Abs(leftHeight - rightHeight) > 1)
 			{
 				return false;
 			}
@@ -50,10 +49,15 @@ namespace CrackingTheCodingInterview
 		}
 		#endregion
 
+		#region Shortest Path / Dijkstra's
+		/// <summary>
+		/// Dijkstra's Algorithm
+		/// </summary>
 		private static void Q4_2()
 		{
 			HackerRankTraversals.ShortestPath();
 		}
+		#endregion
 
 		#region Is Binary Search Tree
 		//https://www.hackerrank.com/challenges/is-binary-search-tree
@@ -76,14 +80,14 @@ namespace CrackingTheCodingInterview
 		{
 			if (root == null) { return true; }
 
-			if (!checkBST(root.left)) { return false; }
+			if (!checkBST(root.left)) { return false; } //move left
 
-			if (root.data <= last) { return false; }
+			if (root.data <= last) { return false; } //check current node
 			else {
 				last = root.data;
 			}
 
-			if (!checkBST(root.right)) { return false; }
+			if (!checkBST(root.right)) { return false; } //move right
 
 			return true;
 		}
@@ -161,7 +165,7 @@ namespace CrackingTheCodingInterview
 			if (root != null)
 			{
 				max = root.data;
-				max = Math.Max(max, FindBSTMax(root.right));
+				max = Math.Max(max, FindBSTMax(root.right)); //always move right
 			}
 			return max;
 		}
@@ -172,12 +176,12 @@ namespace CrackingTheCodingInterview
 			int max = int.MinValue;
 			if (root != null)
 			{
-				var s = new Stack<int>();
+				var s = new Stack<int>();//use stack as most recent will always be largest!
 				s.Push(root.data);
 				while (root.right != null)
 				{
 					s.Push(root.right.data);
-					root = root.right; //iterate down
+					root = root.right; //iterate down, always move right
 				}
 				max = Math.Max(max, s.Pop());
 			}
@@ -238,7 +242,7 @@ namespace CrackingTheCodingInterview
 			int left = TreeHeight(root.left);
 			int right = TreeHeight(root.right);
 
-			return Math.Max(left, right) + 1;
+			return Math.Max(left, right) + 1; //return longer subtree
 		}
 		#endregion
 
@@ -258,6 +262,9 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("LCA: {0}", LCA(root, 1, 8));
 		}
 
+		/// <summary>
+		/// LCA of A and B in a BST will be the node with a value between A and B
+		/// </summary>
 		private static int LCA(TreeNode<int> root, int a, int b)
 		{
 			if (a <= root.data && root.data <= b)
@@ -274,6 +281,7 @@ namespace CrackingTheCodingInterview
 		}
 		#endregion
 
+		#region Subtree of Large Tree
 		private static void Q4_8()
 		{
 			//T1 is a tree with millions of nodes
@@ -289,29 +297,32 @@ namespace CrackingTheCodingInterview
 			//return Search(t1.left, t2) || Search(t1.right, t2) 
 			//now compare each node of that subtree to T2
 		}
+		#endregion
 
+		#region Sum in a Tree
 		private static void Q4_9()
 		{
 			//print all paths in a tree that sum to a given value
 			//where a path can start/end anywhere in the tree
 		}
 
-		//private static List<int> TreeSum(List<int> list, TreeNode<int> node, int runSum, int sum){
-		//	if (node == null)
-		//	{
-		//		return list;
-		//	}
-		//	if (runSum + node.data == sum)
-		//	{
-		//		list.Add(node.data);
-		//	}
-		//	else {
-		//		runSum += node.data;
-		//		TreeSum(list, node.left, runSum, sum);
-		//		TreeSum(list, node.right, runSum, sum);
-		//	}
-		//	return list;
-		//}
+		private static List<int> TreeSum(List<int> list, TreeNode<int> node, int runSum, int sum){
+			if (node == null)
+			{
+				return list;
+			}
+			if (runSum + node.data == sum)
+			{
+				list.Add(node.data);
+			}
+			else {
+				runSum += node.data;
+				TreeSum(list, node.left, runSum, sum);
+				TreeSum(list, node.right, runSum, sum);
+			}
+			return list;
+		}
+		#endregion
 
 		#region Build Order
 		/// <summary>
@@ -329,7 +340,6 @@ namespace CrackingTheCodingInterview
 			Queue<int> roots = FindRoots(graph, adj);
 			Console.WriteLine(ProjectOrder(roots, adj, graph));
 		}
-		#endregion
 
 		private static Graph<string> CreateGraph(string[] projects)
 		{
@@ -416,12 +426,35 @@ namespace CrackingTheCodingInterview
 
 			return string.Join(" ", order.ToArray());
 		}
+		#endregion
 
 		#region Random Node
 		/// <summary>
 		/// Exercise 4.11 in 6th edition
 		/// </summary>
 		public static void RandomNode()
+		{
+			Console.WriteLine("Create a binary tree with a method getRandomNode()");
+			var tree = new RandomTree<int>(0);
+
+			for (int i = 1; i < 10; i++)
+			{
+				tree.Insert(i);
+			}
+
+			for (int i = 0; i < 5; i++)
+			{
+				Console.WriteLine("Random node: " + tree.RandomNode());
+			}
+		}
+		#endregion
+
+		#region List of Depths
+
+		/// <summary>
+		/// TODO: Exercise 4.3 in 6th edition
+		/// </summary>
+		public static void DepthLists()
 		{
 		}
 		#endregion
