@@ -416,5 +416,14 @@ namespace CrackingTheCodingInterview
 
 			return string.Join(" ", order.ToArray());
 		}
+
+		#region Random Node
+		/// <summary>
+		/// Exercise 4.11 in 6th edition
+		/// </summary>
+		public static void RandomNode()
+		{
+		}
+		#endregion
 	}
 }
