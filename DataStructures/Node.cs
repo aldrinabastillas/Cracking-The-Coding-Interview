@@ -26,16 +26,25 @@ namespace DataStructures
 		/// <param name="data">Data to insert</param>
 		public void Insert(T data)
 		{
+			Insert(new Node<T>(data));
+		}
+
+		/// <summary>
+		/// Inserts a given node to the end of the list
+		/// </summary>
+		/// <param name="node">Node.</param>
+		public void Insert(Node<T> newNode)
+		{
 			Node<T> iter = this;
 			while (iter.next != null)
 			{
 				iter = iter.next;
 			}
-			iter.next = new Node<T>(data);
+			iter.next = newNode;
 		}
 
 		/// <summary>
-		/// Prints data for all nodes in list.
+		/// Prints data for all nodes in list separated by a space.
 		/// </summary>
 		public void PrintList()
 		{

@@ -287,5 +287,128 @@ namespace CrackingTheCodingInterview
 			//isSubstring(s1+s1, s2)
 			//isSubstring("waterbottlewaterbottle, "erbottlewat")
 		}
+
+		#region Palindrome Permutation
+		/// <summary>
+		/// Question 1.4 in 6th edition
+		/// </summary>
+		public static void PalindromePermutation()
+		{
+			Console.WriteLine("Given a string, check if it is a permutation of a palindrome");
+			Console.Write("Enter string: ");
+			string s = Console.ReadLine();
+			Console.WriteLine(PalindromePermutation(s));
+		}
+
+		private static bool PalindromePermutation(string s)
+		{
+			var counts = new Dictionary<char, int>();
+			foreach (char c in s)
+			{
+				if (c == ' ') //skip spaces
+				{
+					continue;
+				}
+				if (counts.ContainsKey(c))
+				{
+					counts[c]++;
+				}
+				else {
+					counts.Add(c, 1);
+				}
+			}
+			int odd = 0;
+			foreach (char c in counts.Keys)
+			{
+				if (counts[c] % 2 != 0)
+				{
+					//if string is even length, can't have odd char counts
+					if (s.Length % 2 == 0)
+					{
+						return false;
+					}
+					//is string length odd, can only have 1 char with odd counts
+					else if (++odd > 1)
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		#endregion
+
+		#region One Away
+		/// <summary>
+		/// Exercise 1.5 in 6th edition
+		/// </summary>
+		public static void OneAway()
+		{
+			Console.WriteLine("Edits are insert, delete, or replace a character");
+			Console.WriteLine("Given 2 strings, determine if they are 0 or 1 edits away");
+
+			Console.Write("Enter string 1: ");
+			string a = Console.ReadLine();
+			Console.Write("Enter string 2: ");
+			string b = Console.ReadLine();
+
+			Console.WriteLine(OneAway(a, b));
+		}
+
+
+		private static bool OneAway(string a, string b)
+		{
+			if (Math.Abs(a.Length - b.Length) > 1)
+			{
+				return false;
+			}
+
+			var counts = new Dictionary<char, int>();
+			foreach (char c in a)
+			{
+				if (counts.ContainsKey(c))
+				{
+					counts[c]++;
+				}
+				else {
+					counts.Add(c, 1);
+				}
+			}
+
+			bool newChars = false;
+			foreach (char c in b)
+			{
+				if (counts.ContainsKey(c))
+				{
+					//counts should not go below 0
+					if (--counts[c] < 0)
+					{
+						return false;
+					}
+				}
+				else if (newChars == false)
+				{
+					//don't add the new char!!!
+					newChars = true;
+				}
+				else {
+					return false;
+				}
+			}
+			//counts left should all be 0, and at most one count is 1
+			int single = 0;
+			foreach (int i in counts.Values)
+			{
+				if (i > 1) { 
+					return false;
+				}
+				else if (i == 1 && ++single > 1)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		#endregion
 	}
 }

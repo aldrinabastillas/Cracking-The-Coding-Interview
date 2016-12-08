@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using DataStructures;
 
@@ -301,6 +300,54 @@ namespace CrackingTheCodingInterview
 			}
 		}
 		#endregion
+
+		#region Intersection
+		/// <summary>
+		/// Exercise 2.7 in 6th edition
+		/// </summary>
+		public static void Intersection()
+		{
+			Console.WriteLine("Given 2 lists determine if they intersect");
+			var listA = new Node<string>("a");
+			var listB = new Node<string>("a");
+
+			var copy = new Node<string>("copy");
+
+			listA.Insert("b");
+			listA.Insert("c");
+			listA.Insert(copy);
+			listA.Insert("d");
+
+			listB.Insert("b");
+			listB.Insert("c");
+			listB.Insert("d");
+			listB.Insert(copy);
+			Console.WriteLine(Intersection(listA, listB));
+		}
+		#endregion
+
+		private static bool Intersection<T>(Node<T> listA, Node<T> listB)
+		{
+			var set = new HashSet<Node<T>>();
+			var iter = listA;
+			while (iter != null)
+			{
+				set.Add(iter);
+				iter = iter.next;
+			}
+
+			iter = listB;
+			while (iter != null)
+			{
+				if (set.Contains(iter))
+				{
+					return true;
+				}
+				iter = iter.next;
+			}
+
+			return false;
+		}
 
 	}
 }

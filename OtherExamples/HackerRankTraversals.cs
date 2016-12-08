@@ -141,7 +141,7 @@ namespace CrackingTheCodingInterview
 				string[] line1 = Console.ReadLine().Split(' ');
 				int nodes = Convert.ToInt32(line1[0]);
 				int edges = Convert.ToInt32(line1[1]);
-				var graph = new Graph();
+				var graph = new Graph<int>();
 
 				//int nodes = 5, edges = 3;
 				//int[][] edgeList = new int[edges][];
@@ -172,15 +172,15 @@ namespace CrackingTheCodingInterview
 			}
 		}
 
-		private static int FindShortestRoute(Graph graph, int nodes, int start, int end)
+		private static int FindShortestRoute(Graph<int> graph, int nodes, int start, int end)
 		{
 			var toVisit = new Queue<GraphNode<int>>();
 			//var visited = new Dictionary<int, int>(); //key is id, value is path length
 			var visited = new int[nodes]; //index is node number, value is path length
 
-			if (graph.graph.ContainsKey(start))
+			if (graph.nodes.ContainsKey(start))
 			{
-				toVisit.Enqueue(graph.graph[start]);
+				toVisit.Enqueue(graph.nodes[start]);
 				//visited.Add(start, 0); //add root
 				visited[start - 1] = 0;
 			}
@@ -227,7 +227,7 @@ namespace CrackingTheCodingInterview
 			//int n = Convert.ToInt32(line1[0]);
 			int pairs = Convert.ToInt32(line1[1]);
 
-			Graph astronauts = new Graph();
+			var astronauts = new Graph<int>();
 			for (int i = 0; i < pairs; i++)
 			{
 				int[] temp = Array.ConvertAll(Console.ReadLine().Split(' '), Int32.Parse);

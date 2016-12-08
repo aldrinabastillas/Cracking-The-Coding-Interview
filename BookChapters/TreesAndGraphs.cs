@@ -235,8 +235,8 @@ namespace CrackingTheCodingInterview
 				return -1;
 			}
 
-			int	left = TreeHeight(root.left);
-			int	right = TreeHeight(root.right);
+			int left = TreeHeight(root.left);
+			int right = TreeHeight(root.right);
 
 			return Math.Max(left, right) + 1;
 		}
@@ -312,5 +312,109 @@ namespace CrackingTheCodingInterview
 		//	}
 		//	return list;
 		//}
-	}		
+
+		#region Build Order
+		/// <summary>
+		/// Exercise 4.7 in 6th Edition
+		/// A topological graph sort
+		/// </summary>
+		public static void BuildOrder()
+		{
+			Console.WriteLine("Given a list of projects and dependencies find a build order");
+			string[] projects = { "a", "b", "c", "d", "e", "f" };
+			string[] dependencies = { "a d", "f b", "b d", "f a", "d c" };
+
+			Graph<string> graph = CreateGraph(projects);
+			int[,] adj = CreateAdjMatrix(dependencies, projects);
+			Queue<int> roots = FindRoots(graph, adj);
+			Console.WriteLine(ProjectOrder(roots, adj, graph));
+		}
+		#endregion
+
+		private static Graph<string> CreateGraph(string[] projects)
+		{
+			var graph = new Graph<string>();
+			for (int i = 0; i < projects.Length; i++)
+			{
+				graph.AddNode(i, projects[i]);
+			}
+			return graph;
+		}
+
+		private static int[,] CreateAdjMatrix(string[] dependencies, string[] projects)
+		{
+			var adj = new int[projects.Length, projects.Length];
+			var lookup = new Dictionary<string, int>(); //to get an id given the name
+			for (int i = 0; i < projects.Length; i++)
+			{
+				lookup.Add(projects[i], i);
+			}
+
+			foreach (var d in dependencies)
+			{
+				string[] line = d.Split(' ');
+				int start = lookup[line[0]];
+				int end = lookup[line[1]];
+				adj[start, end] = 1;
+			}
+
+			return adj;
+		}
+
+		private static Queue<int> FindRoots(Graph<string> graph, int[,] adj)
+		{
+			var q = new Queue<int>();
+			for (int i = 0; i < adj.GetLength(1); i++)
+			{
+				bool incomingEdges = true;
+				for (int j = 0; j < adj.GetLength(0); j++)
+				{
+					if (adj[j, i] == 1)
+					{
+						incomingEdges = false;
+						break; // go to next column
+					}
+				}
+				if (incomingEdges)
+				{
+					q.Enqueue(i); //node has no incoming edges, add it as a starting point
+					graph.nodes[i].visited = true;
+				}
+			}
+			return q;
+		}
+
+		private static string ProjectOrder(Queue<int> q, int[,] adj, Graph<string> graph)
+		{
+			if (q.Count == 0)
+			{
+				return "No projects without dependencies, no possible order";
+			}
+
+			var order = new List<string>();
+			while (q.Count > 0)
+			{
+				int project = q.Dequeue();
+				order.Add(graph.nodes[project].data);
+				for (int i = 0; i < adj.GetLength(0); i++)
+				{
+					if (adj[project, i] == 1) //edge exists
+					{
+						if (!graph.nodes[i].visited) //node unvisited
+						{
+							graph.nodes[i].visited = true;
+							q.Enqueue(i);
+						}
+					}
+				}
+			}
+
+			if (order.Count != graph.nodes.Count)
+			{
+				return "No possible order";
+			}
+
+			return string.Join(" ", order.ToArray());
+		}
+	}
 }
