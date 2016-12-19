@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 namespace CrackingTheCodingInterview
 {
@@ -52,10 +54,10 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine("count possible ways to run up stairs");
 			int n = Convert.ToInt32(Console.ReadLine());
 			BigInteger[] ans = new BigInteger[n];
-			for (int i = 1; i <= n; i++)
-			{
-				ans[i - 1] = Q9_1(i, ans);
-			}
+
+			//fill memo table
+			ans[n - 1] = Q9_1(n - 1, ans);
+
 			Console.WriteLine(ans[n-1]);
 		}
 
@@ -124,8 +126,7 @@ namespace CrackingTheCodingInterview
 		//return all subsets of a set
 		private static void Q9_4()
 		{
-			Console.WriteLine("TODO: Question 9.4 - Subsets");
-		//	int[] arr = { 0, 1, 2, 3 };
+			PowerSet();
 		}
 		#endregion
 
@@ -155,14 +156,17 @@ namespace CrackingTheCodingInterview
 				else { curr_max += arr[i]; }
 				contig_max = Math.Max(curr_max, contig_max);
 
+				//both negative
 				if (nonContig_max < 0 && arr[i] < 0) 
 				{
 					nonContig_max = Math.Max(nonContig_max, arr[i]);
 				}
+				//curr is positive
 				else if (nonContig_max < 0 && arr[i] >= 0)
 				{
 					nonContig_max = arr[i];
 				}
+				//both positive, increment
 				else if (nonContig_max > 0 && arr[i] > 0){
 					nonContig_max += arr[i];
 				}
@@ -194,7 +198,8 @@ namespace CrackingTheCodingInterview
 		public static void Permutations()
 		{
 			Console.WriteLine("Permutations");
-			string s = "abc";
+			Console.Write("Enter a string: ");
+			string s = Console.ReadLine();
 
 			Permutations(s.ToCharArray(), 0);
 
@@ -328,6 +333,173 @@ namespace CrackingTheCodingInterview
 				}
 			}
 			return memo[n];
+		}
+		#endregion
+
+		#region Recursive Multiply
+		/// <summary>
+		/// Exercise 8.5 in 6th edition
+		/// </summary>
+		public static void RecursiveMultiply()
+		{
+			Console.WriteLine("Recursively multiply two positive integers only using +, -, and bit shifts");
+
+			Console.Write("Enter a: ");
+			int a = 0;
+			while (!Int32.TryParse(Console.ReadLine(), out a)){
+				Console.Write("Invalid value, enter a: ");	
+			}
+
+			Console.Write("Enter b: ");
+			int b = 0;
+			while (!Int32.TryParse(Console.ReadLine(), out b))
+			{
+				Console.Write("Invalid value, enter b: ");
+			}
+
+			Console.WriteLine("Recursive: " + RecurisveMultiply(a, b));
+			Console.WriteLine("Test: " + (a * b));
+
+		}
+
+		private static int RecurisveMultiply(int a, int b)
+		{
+			//11 x 11
+			int max = Math.Max(a, b);
+			int min = Math.Min(a, b);
+			//base cases;
+			if (min == 1)
+			{
+				return max; 
+			}
+			else if (min == 0)
+			{
+				return 0;
+			}
+
+			//11 = 1011
+			string minBits = Convert.ToString(min, 2); //get binary representation
+			//3
+			int shift = minBits.Length - 1; //position of MSB
+			// 11 - 2^3 = 11-8 = 3
+			int remaining = min - (int)Math.Pow(shift, 2);
+
+			//11 << 3 == 11*2^3 = 11*8
+			int shifted = max << shift;
+
+			//88 + RecursiveMultipley(11, 3) = 11*11 = (11*8) + (11*3)
+			return shifted + RecurisveMultiply(max, remaining);
+
+		}
+		#endregion
+
+		#region Power Set
+		/// <summary>
+		/// Exercise 8.4 in 6th edition
+		/// </summary>
+		public static void PowerSet()
+		{
+			Console.WriteLine("Return all subsets of a set");
+			Console.Write("Enter list of items separated by a space: ");
+			string[] items = Console.ReadLine().Split(' ');
+
+			PowerSet("", items);
+			foreach (var set in sets)
+			{
+				Console.WriteLine(set);
+			}
+		}
+
+		private static List<string> sets = new List<string>();
+		private static void PowerSet(string prefix, string[] left)
+		{
+			int length = left.Length;
+			for (int i = 0; i < length; i++)
+			{
+				//append string to prefix
+				string set = prefix + left[i];
+				sets.Add(set);
+
+				if (length > 1)
+				{
+					left = Swap(left, 0, i);
+					string[] newLeft = new string[length - 1];
+					Array.Copy(left, 1, newLeft, 0, length - 1);
+					PowerSet(set, newLeft);
+					left = Swap(left, 0, i); //backtrack     
+				}   
+			}
+		}
+
+		private static string[] Swap(string[] set, int a, int b)
+		{
+			string temp = set[a];
+			set[a] = set[b];
+			set[b] = temp;
+			return set;
+		}
+		#endregion
+
+		#region Parentheses
+		/// <summary>
+		/// Exercise 8.9 in 6th edition
+		/// </summary>
+		public static void Parentheses()
+		{
+			Console.WriteLine("Print all valid cominbations of parentheses, given a number of pairs");
+			int n = 0;
+			Console.Write("Enter number of pairs: ");
+			while (!Int32.TryParse(Console.ReadLine(), out n))
+			{
+				Console.Write("Invalid number, try again: ");
+			}
+
+			parens = new HashSet<string>[n];
+			Parentheses(0);
+			for (int i = 0; i < n; i++)
+			{
+				Console.WriteLine((i + 1) + ": " + string.Join(" ", parens[i]));
+			}
+		}
+
+		private static HashSet<string>[] parens;
+		private static void Parentheses(int n)
+		{
+			if (n == parens.Length)
+			{
+				return; //base case
+			}
+
+			var set = new HashSet<string>();
+			if (n == 0)
+			{
+				set.Add("()");
+			}
+			else {
+				foreach (var paren in parens[n - 1])
+				{
+					Surround(set, paren);
+					Inserts(set, paren);
+				}
+			}
+
+			parens[n] = set; //save
+			Parentheses(n + 1); //recurse
+		}
+
+		private static void Surround(HashSet<string> set, string paren)
+		{
+			set.Add("(" + paren + ")");
+		}
+
+		private static void Inserts(HashSet<string> set, string paren)
+		{
+			for (int i = 0; i < paren.Length; i++)
+			{
+				string left = paren.Substring(0, i);
+				string right = paren.Substring(i, paren.Length - i);
+				set.Add(left + "()" + right);
+			}
 		}
 		#endregion
 	}

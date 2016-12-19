@@ -270,6 +270,7 @@ namespace CrackingTheCodingInterview
 
 		}
 
+		//using math!!
 		private static string PlaceDigits(int n)
 		{
 			var digits = new StringBuilder();
@@ -286,7 +287,7 @@ namespace CrackingTheCodingInterview
 				int digit = n / place;
 				digits.Append(digit.ToString() + " ");
 
-				//iterate
+				//iterate by ten
 				n %= place;
 				place /= 10;
 			}

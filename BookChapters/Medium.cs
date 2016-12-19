@@ -190,9 +190,9 @@ namespace CrackingTheCodingInterview
 		#region Largest Subarray Sum
 		public static void LargestSubarraySum()
 		{
-			Console.WriteLine("Q17.7: Largest Subarray Sum");
-			//int[] arr = {2, -8, 3, -2, 4, -10};
-			int[] arr = { -3, -1, -4 };
+			Console.WriteLine("Q17.7: Largest Contiguous Subarray Sum");
+			int[] arr = {2, -8, 3, -2, 4, -10};
+			//int[] arr = { -3, -1, -4 };
 			Console.WriteLine(Kadanes(arr));
 		}
 
