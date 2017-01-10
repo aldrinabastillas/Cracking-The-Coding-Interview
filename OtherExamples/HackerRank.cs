@@ -1,7 +1,7 @@
 ﻿using DataStructures;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using TextMethods;
 
 namespace CrackingTheCodingInterview
 {
@@ -725,6 +725,51 @@ namespace CrackingTheCodingInterview
 
             return sum;
         }
+		#endregion
+
+		#region Great XOR
+		//https://www.hackerrank.com/contests/w28/challenges/the-great-xor
+		public static void GreatXOR(String[] args)
+		{
+			Console.WriteLine("Find all a where x^a > x and a < x");
+			int x = TextGui.IntegerPrompt("Enter x");
+			GreatXOR_Log(x);
+		}
+
+		/// <summary>
+		/// O(logn), counts all the 0 bits
+		/// </summary>
+		private static void GreatXOR_Log(int x)
+		{
+			int count = 0;
+			string bits = Convert.ToString(x, 2);
+			for (int i = bits.Length - 1, j = 0; i >= 1; i--, j++)
+			{
+				//count all the 0 bits
+				if (bits[i] == '0')
+				{
+					//and add their value
+					count += (int)Math.Pow(2, j);
+				}
+			}
+			Console.WriteLine("{0} a's exist", count);
+		}
+
+		/// <summary>
+		/// Checks if x^a > x for every a less than x  
+		/// </summary>
+		private static void GreatXORLinear(int x)
+		{
+			int count = 0;
+			for (int a = 1; a < x; a++)
+			{
+				if ((x ^ a) > x)
+				{
+					count++;
+				}
+			}
+			Console.WriteLine(count);
+		}
 		#endregion
     } //end class
 } //end namespace

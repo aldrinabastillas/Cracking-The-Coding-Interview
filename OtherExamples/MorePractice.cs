@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DataStructures;
+using TextMethods;
 
 namespace CrackingTheCodingInterview
 {
@@ -257,15 +258,13 @@ namespace CrackingTheCodingInterview
 		#endregion
 	
 		#region Place Digits
+		/// <summary>
+		/// Prints the digit at each place. ex "123 -> 1, 2, 3"
+		/// </summary>
 		public static void PlaceDigits()
 		{
 			Console.WriteLine("Write digit in each place.");
-			Console.Write("Enter n: ");
-			int n = 0;
-			while (!Int32.TryParse(Console.ReadLine(), out n))
-			{
-				Console.Write("Invalid input, try again: ");
-			}
+			int n = TextGui.IntegerPrompt("Enter n: ");
 			Console.WriteLine(PlaceDigits(n));
 
 		}
@@ -293,7 +292,6 @@ namespace CrackingTheCodingInterview
 			}
 			return digits.ToString();
 		}
-		#endregion
-	
+		#endregion	
 	}
 }

@@ -2,10 +2,11 @@
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace TextGui
+namespace TextMethods
 {
 	public class TextGui
 	{
+		#region Text Prompt Methods
 		private static List<Type> chapters { get; set; }
 
 		public static void Main(string[] args)
@@ -132,5 +133,19 @@ namespace TextGui
 				ChapterSelect();
 			}
 		}
-	}
-}
+		#endregion
+
+		#region Other Helper Methods
+		public static int IntegerPrompt(string prompt)
+		{
+			int num = 0;
+			Console.Write(prompt);
+			while (!int.TryParse(Console.ReadLine(), out num))
+			{
+				Console.Write("Invalid number, try again: ");
+			}
+			return num;
+		}
+		#endregion
+	} //end class
+} // end namespace

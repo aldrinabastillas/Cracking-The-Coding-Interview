@@ -3,22 +3,13 @@ using System.Text;
 using System.Collections.Generic;
 using System.Xml;
 using DataStructures;
+using TextMethods;
 
 namespace CrackingTheCodingInterview
 {
 	//Chapter 17 in CTCI
 	public class Medium
 	{
-		public static void Run()
-		{
-			//Q17_3();
-			//Q17_4();
-			//Q17_6();
-			//Q17_11();
-			//Q17_12();
-			Q17_13();
-		}
-
 		#region Swap Numbers
 		public static void SwapNumbers()
 		{
@@ -292,7 +283,7 @@ namespace CrackingTheCodingInterview
 		#region Convert BST to a doubly linked list
 		//keep items in order, and do in place
 		private static Queue<BiNode> q = new Queue<BiNode>();
-		public static void Q17_13()
+		public static void BSTtoDLL()
 		{
 			Console.WriteLine("Convert BST to a doubly linked list.");
 			var root = new BiNode(4);
@@ -356,5 +347,184 @@ namespace CrackingTheCodingInterview
 		}
 		#endregion
 
+		#region Intersecting Lines
+		/// <summary>
+		/// Question 16.3 in 6th edition
+		/// </summary>
+		private static void IntersectingLines()
+		{
+			Console.WriteLine("given 2 line segments, find their intersection, if any");
+			int startx1 = TextGui.IntegerPrompt("Enter line 1, start x");
+			int starty1 = TextGui.IntegerPrompt("Enter line 1, start y");
+			int endx1 = TextGui.IntegerPrompt("Enter line 1, end x");
+			int endy1 = TextGui.IntegerPrompt("Enter line 1, end y");
+
+			int startx2 = TextGui.IntegerPrompt("Enter line 2, start x");
+			int starty2 = TextGui.IntegerPrompt("Enter line 2, start y");
+			int endx2 = TextGui.IntegerPrompt("Enter line 2, end x");
+			int endy2 = TextGui.IntegerPrompt("Enter line 2, end y");
+
+			var line1 = new Line(new Point(startx1, starty1), new Point(endx1, endy1));
+			var line2 = new Line(new Point(startx2, starty2), new Point(endx2, endy2));
+
+			var intersection = Line.Intersection(line1, line2);
+			Console.WriteLine("{0}, {1}", intersection.x, intersection.y);
+		}
+
+
+		#endregion
+
+		#region Smallest Difference
+		public static void SmallestDifference()
+		{
+			Console.WriteLine("Find the smallest non-neg difference between one value in each array");
+			int[] A = { 1, 3, 15, 11, 2 };
+			int[] B = { 23, 127, 235, 19, 8 };
+
+			//O(AlogA + BlogB);
+			Array.Sort(A);
+			Array.Sort(B);
+			int a = 0, b = 0;
+			int min = int.MaxValue;
+			while (a < A.Length && b < B.Length)
+			{
+				min = Math.Min(min, Math.Abs(A[a] - B[b]));
+				if (A[a] < B[b])
+				{
+					a++;
+				}
+				else{
+					b++;
+				}
+			}
+
+			Console.WriteLine(min);
+		}
+		#endregion
+
+		#region Operations
+		public static void Operations()
+		{
+			Console.WriteLine("Implement *, /, - only using addition");
+			int a = TextGui.IntegerPrompt("Enter integer 1: ");
+			int b = TextGui.IntegerPrompt("Enter integer 2: ");
+			Console.WriteLine("{0} x {1} = {2}", a, b, Multiply(a, b));
+			Console.WriteLine("{0} / {1} = {2}", a, b, Divide(a, b));
+			Console.WriteLine("{0} - {1} = {2}", a, b, Subtract(a, b));
+		}
+
+		/// <summary>
+		/// Multiply a by b only using +.
+		/// </summary>
+		private static int Multiply(int a, int b)
+		{
+			int product = 0;
+			if (a == 0 || b == 0)
+			{
+				return 0;
+			}
+			int larger = Math.Max(Math.Abs(a), Math.Abs(b)); 
+			int smaller = Math.Min(Math.Abs(a), Math.Abs(b));
+
+			for (int i = 1; i <= smaller; i++)
+			{
+				product += larger;
+			}
+
+			if ((a < 0 && b < 0) ||
+			   (a > 0 && b > 0))
+			{
+				return product;
+			}
+			else {
+				return Negate(product);
+			}
+		}
+
+		/// <summary>
+		/// Integer divide a by b only using +
+		/// </summary>
+		private static int Divide(int a, int b)
+		{
+			if (b == 0)
+			{
+				return int.MinValue;
+			}
+			if (b == 1)
+			{
+				return a;
+			}
+
+			int product = 0;
+			int i = 0;
+
+			int absA = Math.Abs(a);
+			int absB = Math.Abs(b);
+			while (product + absB <= absA)
+			{
+				product += absB;
+				i++;
+			}
+
+			if ((a < 0 && b < 0) ||
+			   (a > 0 && b > 0))
+			{
+				return i;
+			}
+			else {
+				return Negate(i);
+			}
+		}
+
+		/// <summary>
+		/// Subtract b from a only using +
+		/// </summary>
+		private static int Subtract(int a, int b)
+		{
+			return a + Negate(b);
+		}
+
+		private static int Negate(int a)
+		{
+			int neg = 0;
+			int newSign = (a > 0) ? -1 : 1;
+			while (a != 0)
+			{
+				neg += newSign;
+				a += newSign;
+			}
+			return neg;
+		}
+		#endregion
+
+		#region Diving Board
+		static int maxK, shorter, longer;
+		static HashSet<int> boards = new HashSet<int>();
+		public static void DivingBoard()
+		{
+			Console.WriteLine("Given short and long planks, you must use k plans.");
+			Console.WriteLine("Find all possible lengths for the diving board.");
+			maxK = TextGui.IntegerPrompt("Enter k: ");
+			shorter = TextGui.IntegerPrompt("Enter shorter: ");
+			longer = TextGui.IntegerPrompt("Enter longer: ");
+			BoardPerms(0, 0);
+			foreach (var b in boards)
+			{
+				Console.WriteLine(b);
+			}
+		}
+
+		private static void BoardPerms(int length, int k)
+		{
+			if (k == maxK)
+			{
+				boards.Add(length);
+			}
+			else {
+				BoardPerms(length + shorter, k + 1);
+				BoardPerms(length + longer, k + 1);
+			}
+		}
+		#endregion
 	}
 }

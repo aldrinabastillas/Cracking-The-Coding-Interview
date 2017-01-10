@@ -61,6 +61,8 @@
     <Compile Include="OtherExamples\Strings.cs" />
     <Compile Include="OtherExamples\MorePractice.cs" />
     <Compile Include="DataStructures\RandomTree.cs" />
+    <Compile Include="OtherExamples\TechInterview.cs" />
+    <Compile Include="DataStructures\Line.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inputFiles\input02.txt" />
