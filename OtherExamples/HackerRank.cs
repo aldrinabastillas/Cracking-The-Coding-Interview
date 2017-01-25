@@ -1,6 +1,7 @@
 ﻿using DataStructures;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TextMethods;
 
 namespace CrackingTheCodingInterview
@@ -756,7 +757,7 @@ namespace CrackingTheCodingInterview
 		}
 
 		/// <summary>
-		/// Checks if x^a > x for every a less than x  
+		/// O(n) Checks if x^a > x for every a less than x  
 		/// </summary>
 		private static void GreatXORLinear(int x)
 		{
@@ -769,6 +770,37 @@ namespace CrackingTheCodingInterview
 				}
 			}
 			Console.WriteLine(count);
+		}
+		#endregion
+
+		#region Lucky Number Eight
+		//https://www.hackerrank.com/contests/w28/challenges/lucky-number-eight
+		/// <summary>
+		/// Count all subsequences of n that are divisble by 8
+		/// subsequences of 12345: 1, 12, 13, 14, 15, 123, 124, 125, etc
+		/// </summary>
+		private static int eights = 0;
+		public static void LuckyNumberEight()
+		{
+			Console.WriteLine("Count all subsequences of n that are divisble by 8");
+			Console.Write("Enter n: ");
+			string number = Console.ReadLine();
+			Permutation("", number);
+		}
+
+		private static void Permutation(string prefix, string suffix)
+		{
+			for (int i = 0; i < suffix.Length; i++)
+			{
+				string newPrefix = new StringBuilder(prefix + suffix[i]).ToString();
+				string newSuffix = suffix.Substring(i + 1, suffix.Length - 1 - i);
+				Console.WriteLine("newPrefix: {0}, newSuffix: {1}", newPrefix, newSuffix);
+				if (Convert.ToInt32(newPrefix) % 8 == 0)
+				{
+					eights++;
+				}
+				Permutation(newPrefix, newSuffix); //recurse
+			}
 		}
 		#endregion
     } //end class

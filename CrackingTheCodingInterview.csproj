@@ -63,6 +63,8 @@
     <Compile Include="DataStructures\RandomTree.cs" />
     <Compile Include="OtherExamples\TechInterview.cs" />
     <Compile Include="DataStructures\Line.cs" />
+    <Compile Include="DataStructures\ObjectOrientedDesign.cs" />
+    <Compile Include="DataStructures\PubSubPattern.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inputFiles\input02.txt" />

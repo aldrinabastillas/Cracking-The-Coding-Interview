@@ -202,20 +202,6 @@ namespace CrackingTheCodingInterview
 			string s = Console.ReadLine();
 
 			Permutations(s.ToCharArray(), 0);
-
-			//for (int i = 0; i < s.Length; i++)
-			//{
-				
-			//	for (int j = i + 1; j <= s.Length; j++)
-			//	{
-			//		s = Swap(s, i, j);
-			//		string substring = s.Substring(i, j);
-			//		Permutations(substring.ToCharArray(), 0);
-			//		s = Swap(s, i, j);
-			//	}
-
-			//}
-
 		}
 
 		private static void Permutations(char[] s, int start)
@@ -364,7 +350,7 @@ namespace CrackingTheCodingInterview
 
 		private static int RecurisveMultiply(int a, int b)
 		{
-			//11 x 11
+			//11 x 10
 			int max = Math.Max(a, b);
 			int min = Math.Min(a, b);
 			//base cases;
@@ -377,17 +363,21 @@ namespace CrackingTheCodingInterview
 				return 0;
 			}
 
-			//11 = 1011
+			// Example:
+			// For the smaller number, decompose into all the 1 bits
+			// thus 10 = 1000 + 10 = 8 + 2.
+			// Now (max * 8) + (max * 2), where
+			// max * 8 == max << 3
 			string minBits = Convert.ToString(min, 2); //get binary representation
 			//3
 			int shift = minBits.Length - 1; //position of MSB
-			// 11 - 2^3 = 11-8 = 3
+			// 10 - 2^3 = 10-8 = 2
 			int remaining = min - (int)Math.Pow(shift, 2);
 
 			//11 << 3 == 11*2^3 = 11*8
 			int shifted = max << shift;
 
-			//88 + RecursiveMultipley(11, 3) = 11*11 = (11*8) + (11*3)
+			//88 + RecursiveMultiply(11, 2) = 11*10 = (11*8) + (11*2)
 			return shifted + RecurisveMultiply(max, remaining);
 
 		}

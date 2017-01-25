@@ -287,12 +287,12 @@ namespace CrackingTheCodingInterview
 		{
 			Console.WriteLine("Convert BST to a doubly linked list.");
 			var root = new BiNode(4);
-			root.b1 = new BiNode(2);
-			root.b1.b1 = new BiNode(1);
-			root.b1.b2 = new BiNode(3);
+			root.B1 = new BiNode(2);
+			root.B1.B1 = new BiNode(1);
+			root.B1.B2 = new BiNode(3);
 
-			root.b2 = new BiNode(6);
-			root.b2.b1 = new BiNode(5);
+			root.B2 = new BiNode(6);
+			root.B2.B1 = new BiNode(5);
 
 			ToQueue(root);
 			BiNode head = ToList(q);
@@ -302,9 +302,9 @@ namespace CrackingTheCodingInterview
 			Console.Write("Forwards: ");
 			while (iter != null)
 			{
-				Console.Write(iter.data + " ");
+				Console.Write(iter.Data + " ");
 				tail = iter;
-				iter = iter.b2;
+				iter = iter.B2;
 			}
 
 			Console.WriteLine();
@@ -312,8 +312,8 @@ namespace CrackingTheCodingInterview
 			iter = tail;
 			while (iter != null)
 			{
-				Console.Write(iter.data + " ");
-				iter = iter.b1;
+				Console.Write(iter.Data + " ");
+				iter = iter.B1;
 			}
 		}
 
@@ -324,9 +324,9 @@ namespace CrackingTheCodingInterview
 				return;
 			}
 				
-			ToQueue(root.b1);
+			ToQueue(root.B1);
 			q.Enqueue(root);
-			ToQueue(root.b2);
+			ToQueue(root.B2);
 		}
 
 		private static BiNode ToList(Queue<BiNode> list)
@@ -337,11 +337,11 @@ namespace CrackingTheCodingInterview
 			BiNode iter = head;
 			while (q.Count > 0)
 			{
-				iter.b1 = last;
-				iter.b2 = q.Dequeue();
+				iter.B1 = last;
+				iter.B2 = q.Dequeue();
 
 				last = iter;
-				iter = iter.b2;
+				iter = iter.B2;
 			}
 			return head;
 		}
