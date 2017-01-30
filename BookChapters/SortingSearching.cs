@@ -1,6 +1,7 @@
 ﻿using DataStructures;
 using System;
 using System.Linq;
+using System.Collections;
 
 namespace CrackingTheCodingInterview
 {
@@ -16,10 +17,14 @@ namespace CrackingTheCodingInterview
 			int[] A = { 2, 4, 6, 8, int.MinValue, int.MinValue, int.MinValue, int.MinValue };
 			int[] B = { 1, 3, 5, 7 };
 
-			int a = 3; //would have to walk array to find this index
+			//right most index of both A and B
+			int a = A.Length - B.Length - 1; //8 - 4 - 1 = 3
 			int b = B.Length - 1;
+
+			//insert into right side of A
 			for (int i = A.Length - 1; i >= 0; i--)
 			{
+				//choose the bigger of the right most elements from A and B
 				if (a >= 0 && A[a] > B[b])
 				{
 					A[i] = A[a];
@@ -40,7 +45,7 @@ namespace CrackingTheCodingInterview
 		public static void SortAnagramArray()
 		{
 			Console.WriteLine("Q11.2: Sort anagram array");
-			//sort an array of strings so that all anagrams are next to each other
+			Console.WriteLine("Sort an array of strings so that all anagrams are next to each other");
 			string[] s = { "arc", "bab", "rca", "bba", "car" };
 			for (int i = 0; i < s.Length - 1; i++)
 			{
@@ -60,6 +65,9 @@ namespace CrackingTheCodingInterview
 
 		}
 
+		/// <summary>
+		/// Checks if 2 strings have the same letter counts
+		/// </summary>
 		private static bool IsAnagram(string A, string B)
 		{
 			if (A.Length != B.Length)
@@ -122,6 +130,9 @@ namespace CrackingTheCodingInterview
 			return index;
 		}
 
+		/// <summary>
+		/// Binary search that returns the index of the element to search for
+		/// </summary>
 		private static int FindIndex(int[] arr, int toFind, int start, int end)
 		{
 			if (start > end)
@@ -149,11 +160,18 @@ namespace CrackingTheCodingInterview
 		{
 			//sort a 20GB file that has one string per line
 
+			//Solution A: external bucket sort
 			//create a hashtable with a bucket for each letter
 			//flush these buckets to file every so often
 			//now sort each bucket, using something like quicksort
 			//read each bucket file then write to a new file to
 			//reconstruct original file
+
+			//Solution B: external merge sort
+			//split file into chunks based on amount of available memory
+			//sort each chunk and save
+			//once each chunk is sorted, mergesort each chunk
+
 		}
 		#endregion
 
@@ -164,10 +182,10 @@ namespace CrackingTheCodingInterview
 			//find the index of a given string
 			//string[] s = { "at", "", "", "", "ball", "", "", "car", "", "", "dad" };
 
-			//brute-force O(n) delete all empty elements first
+			//brute-force O(n) look at every index in the array
 
 			//faster: use some kind of modified Binary Search
-			//move out from middle until you find a non-empty string
+			//after finding middle, expand out from left and right until you find a non-empty string
 		}
 		#endregion
 
@@ -231,6 +249,104 @@ namespace CrackingTheCodingInterview
 
 			Console.WriteLine("Height first: " + heightMax);
 			Console.WriteLine("Weight first: " + weightMax);
+		}
+		#endregion
+
+		#region Sorted Search, No Size
+		/// <summary>
+		/// Question 10.4 in 6th edition
+		/// </summary>
+		public static void SortedSearchNoSize()
+		{
+			Console.WriteLine("Find the index of an element in a sorted array of unknown size");
+			int[] arr = { 0, 1, 2, 6, 8, 10, 12, 14, 19 };
+			int toFind = 9;
+			Console.WriteLine(OneSidedBinary(toFind, 0, 1, arr));
+		}
+
+		/// <summary>
+		/// Doubles search space each time. If searched too far, then do normal binary searchs
+		/// </summary>
+		private static int OneSidedBinary(int toFind, int left, int right, int[] arr)
+		{
+			if (arr[right] == toFind)
+			{
+				return right;
+			}
+			if (arr[right] < toFind) //not big enough, keep searching
+			{
+				return OneSidedBinary(toFind, right, right * 2, arr);
+			}
+			//too big, do binary search in current window
+			return BinarySearch(toFind, left, right - 1, arr);
+		}
+
+		/// <summary>
+		/// Normal binary search, returns index of item to find
+		/// </summary>
+		private static int BinarySearch(int toFind, int left, int right, int[] arr)
+		{
+			while (left <= right)
+			{
+				int midInd = (left + right) / 2;
+				int midVal = arr[midInd];
+				if (midVal == toFind)
+				{
+					return midInd;
+				}
+				if (midVal > toFind)
+				{
+					right = midInd - 1; //mid too big, search left
+				}
+				else {
+					//mid too small, search right
+					left = midInd + 1;
+				}
+			}
+			return -1; //not found
+		}
+		#endregion
+
+		#region Missing Int
+		private static void MissingInt()
+		{
+			//Question 10.7 in 6th edition
+			//Given an input file with 4 billion non-negative integers, provide an algorithm to
+			//generate an integer that is not contained in the file
+			//Assume you have 1 GB of memory.
+
+			//1GB = 8 billion bits available
+			//create a BitArray 4 billion long (essentially a boolean array, but less space) (boolean is 1 byte, or 8 bits)
+			//go through all numbers in file and mark off
+			//go through BitArray and find first one that isn't marked off
+
+			//Now assume you have only 10 MB of memory, that the values are distinct, and only 
+			//have 1 billion non-negative integers
+
+			//divide up integers up to a billion into buckets
+			//since numbers are unique, we know that the count of each bucket should equal 
+			//the range of each bucket
+			//use the first approach to find the missing number in the bucket
+		}
+		#endregion
+
+		#region Find Duplicates 
+		private static void FindDuplicates(int[] arr)
+		{
+			//Question 10.8 in 6th Edition
+			//given an array with al the numbers from 1 to N, where N is at most 32,000, 
+			//print all duplicate entries. You do not know what N is, and you only have 4KB memory.
+			BitArray bitArray = new BitArray(32000);
+			foreach (int a in arr)
+			{
+				if (bitArray[a] == true)
+				{
+					Console.WriteLine(a); //print duplicate
+				}
+				else {
+					bitArray[a] = true;
+				}
+			}
 		}
 		#endregion
 	}

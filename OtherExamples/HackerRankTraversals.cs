@@ -17,10 +17,10 @@ namespace CrackingTheCodingInterview
 			//int m = Convert.ToInt32(Console.ReadLine());
 			int n = 4, m = 4;
 			int[][] grid = new int[n][];
-			grid[0] = Array.ConvertAll("1 1 0 0".Split(' '), Int32.Parse);
+			grid[0] = Array.ConvertAll("0 1 0 0".Split(' '), Int32.Parse);
 			grid[1] = Array.ConvertAll("0 1 1 0".Split(' '), Int32.Parse);
 			grid[2] = Array.ConvertAll("0 0 1 0".Split(' '), Int32.Parse);
-			grid[3] = Array.ConvertAll("1 0 0 0".Split(' '), Int32.Parse);
+			grid[3] = Array.ConvertAll("1 0 1 0".Split(' '), Int32.Parse);
 
 			int maxRegion = 0;
 			for (int i = 0; i < n; i++)
@@ -29,8 +29,9 @@ namespace CrackingTheCodingInterview
 				{
 					if (grid[i][j] != 0)
 					{
-						int[][] copy = CopyGrid(grid, n, m);
-						int region = getRegion(copy, i, j, n, m);
+						//int[][] copy = CopyGrid(grid, n, m);
+						//int region = getRegionOld(copy, i, j, n, m);
+						int region = getRegionDFS(grid, i, j, n, m);
 						maxRegion = Math.Max(region, maxRegion);
 					}
 				}
@@ -38,19 +39,40 @@ namespace CrackingTheCodingInterview
 			Console.WriteLine(maxRegion);
 		}
 
-		private static int[][] CopyGrid(int[][] grid, int rows, int columns)
+		/// <summary>
+		/// Gets the size of the current connected region, using DFS
+		/// </summary>
+		private static int getRegionDFS(int[][] grid, int i, int j, int rows, int cols)
 		{
-			int[][] copy = new int[rows][];
-			for (int i = 0; i < rows; i++)
+			int region = 0;
+			//check bounds
+			if (i < 0 || i >= rows ||
+			    j < 0 || j >= cols ||
+			    grid[i][j] == 0)
 			{
-				int[] row = new int[columns];
-				Array.Copy(grid[i], row, columns);
-				copy[i] = row;
+				return region;
 			}
-			return copy;
+
+			region++;
+			grid[i][j] = 0; //mark as visited
+
+			region += getRegionDFS(grid, i, j - 1, rows, cols); //move west
+			region += getRegionDFS(grid, i, j + 1, rows, cols); //move east
+			region += getRegionDFS(grid, i + 1, j, rows, cols); //move north
+			region += getRegionDFS(grid, i - 1, j, rows, cols); //move south
+
+			region += getRegionDFS(grid, i + 1, j - 1, rows, cols); //move north west
+			region += getRegionDFS(grid, i + 1, j + 1, rows, cols); //move north east
+			region += getRegionDFS(grid, i - 1, j + 1, rows, cols); //move south east
+			region += getRegionDFS(grid, i - 1, j - 1, rows, cols); //move south west
+
+			return region;
 		}
 
-		private static int getRegion(int[][] grid, int i, int j, int n, int m)
+		/// <summary>
+		/// Didn't mark nodes as visited, so would need multiple copies of the grid
+		/// </summary>
+		private static int getRegionOld(int[][] grid, int i, int j, int n, int m)
 		{
 			int region = 0;
 			if (i < 0 || i >= n || //check bounds
@@ -64,17 +86,30 @@ namespace CrackingTheCodingInterview
 			grid[i][j]--; //mark cell as visited before moving on!
 
 			//move all directions, DFS!
-			region += getRegion(grid, i, j - 1, n, m); //move west
-			region += getRegion(grid, i, j + 1, n, m); //move east
-			region += getRegion(grid, i + 1, j, n, m); //move north
-			region += getRegion(grid, i - 1, j, n, m); //move south
+			region += getRegionOld(grid, i, j - 1, n, m); //move west
+			region += getRegionOld(grid, i, j + 1, n, m); //move east
+			region += getRegionOld(grid, i + 1, j, n, m); //move north
+			region += getRegionOld(grid, i - 1, j, n, m); //move south
 
-			region += getRegion(grid, i + 1, j - 1, n, m); //move north west
-			region += getRegion(grid, i + 1, j + 1, n, m); //move north east
-			region += getRegion(grid, i - 1, j + 1, n, m); //move south east
-			region += getRegion(grid, i - 1, j - 1, n, m); //move south west
+			region += getRegionOld(grid, i + 1, j - 1, n, m); //move north west
+			region += getRegionOld(grid, i + 1, j + 1, n, m); //move north east
+			region += getRegionOld(grid, i - 1, j + 1, n, m); //move south east
+			region += getRegionOld(grid, i - 1, j - 1, n, m); //move south west
 
 			return region;
+		}
+
+		//returns a copy of the given grid
+		private static int[][] CopyGrid(int[][] grid, int rows, int columns)
+		{
+			int[][] copy = new int[rows][];
+			for (int i = 0; i < rows; i++)
+			{
+				int[] row = new int[columns];
+				Array.Copy(grid[i], row, columns);
+				copy[i] = row;
+			}
+			return copy;
 		}
 		#endregion
 

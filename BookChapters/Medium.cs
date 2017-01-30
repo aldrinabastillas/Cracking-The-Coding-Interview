@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Xml;
 using DataStructures;
 using TextMethods;
 
@@ -147,9 +146,7 @@ namespace CrackingTheCodingInterview
 		#region Sorted Sub Array
 		public static void SortedSubArray()
 		{
-			//edit insertion sort
-			//save lowest and highest index that an element
-			//was inserted into
+			
 			Console.WriteLine("Sorted sub array");
 			//int[] arr = { 1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19 };
 			//int[] arr = { 1, 2, 3, 4};
@@ -157,20 +154,26 @@ namespace CrackingTheCodingInterview
 			Q17_6(arr);
 		}
 
-		private static void Q17_6(int[] arr)
+		//edit insertion sort
+		//save lowest and highest index that an element
+		//was inserted into
+		static void Q17_6(int[] arr)
 		{
 			int min = Int32.MaxValue;
 			int max = Int32.MinValue;
 			for (int i = 0; i < arr.Length - 1; i++)
 			{
 				int j = i;
+				//swap to left while smaller than left
 				while (j >= 0 && arr[j] > arr[j + 1])
 				{
-					max = i + 1;
+					//swap left with right
 					int temp = arr[j + 1];
 					arr[j + 1] = arr[j];
 					arr[j] = temp;
-					min = Math.Min(min, j);
+
+					max = i + 1; //save where swapping started
+					min = Math.Min(min, j); //save min index
 					j--;
 				}
 			}
@@ -514,7 +517,7 @@ namespace CrackingTheCodingInterview
 			}
 		}
 
-		private static void BoardPerms(int length, int k)
+		static void BoardPerms(int length, int k)
 		{
 			if (k == maxK)
 			{
@@ -524,6 +527,199 @@ namespace CrackingTheCodingInterview
 				BoardPerms(length + shorter, k + 1);
 				BoardPerms(length + longer, k + 1);
 			}
+		}
+		#endregion
+
+		#region Master Mind
+		/// <summary>
+		/// Exericse 16.15 in 6th edition
+		/// </summary>
+		public static void MasterMind()
+		{
+			Console.WriteLine("Given 4 slots and 4 colors, guess the combination");
+			Console.WriteLine("Print number of hits and psuedo-hits");
+
+			string solution = "RGBY";
+			string guess = "GGRR";
+			int[] solutionCounts = new int[4];
+			int[] guessCounts = new int[4];
+
+			int hits = 0, pseudoHit = 0;
+			for (int i = 0; i < 4; i++)
+			{
+				if (solution[i] == guess[i])
+				{
+					hits++;
+				}
+				else {
+					var solutionColor = Mastermind.CharToColor(solution[i]);
+					var guessColor = Mastermind.CharToColor(guess[i]);
+					solutionCounts[(int)solutionColor]++;
+					guessCounts[(int)guessColor]++;
+				}
+			}
+
+			for (int i = 0; i < 4; i++)
+			{
+				if (guessCounts[i] >= solutionCounts[i])
+				{
+					pseudoHit += solutionCounts[i];
+				}
+			}
+
+			Console.WriteLine("Solution: {0}, Guess: {1}", solution, guess);
+			Console.WriteLine("Hits: {0}, Psuedo-Hits: {1}", hits, pseudoHit);
+		}
+		#endregion
+
+		#region Pond Sizes
+		/// <summary>
+		/// Exercise 16.19 in 6th Edition
+		/// </summary>
+		public static void PondSizes()
+		{
+			Console.WriteLine("In a matrix where 0 is water, find the sizes of all ponds");
+			int[,] land = { { 0, 2, 1, 0 },
+							{ 0, 1, 0, 1 },
+							{ 1, 2, 0, 1 },
+							{ 0, 2, 0, 1 } };
+
+			List<int> ponds = new List<int>();
+			for (int row = 0; row < land.GetLength(0); row++)
+			{
+				for (int col = 0; col < land.GetLength(1); col++)
+				{
+					//only start DFS if water
+					if (land[row, col] == 0)
+					{
+						int pondSize = DFS_Pond(land, row, col);
+						ponds.Add(pondSize);
+					}
+				}
+			}
+
+			Console.WriteLine("Pond sizes: {0}", string.Join(" ", ponds.ToArray()));
+		}
+
+		static int DFS_Pond(int[,] land, int row, int col)
+		{
+			int size = 0;
+
+			//check bounds and if land
+			if (row < 0 || row >= land.GetLength(0) ||
+			   col < 0 || col >= land.GetLength(1) ||
+			   land[row, col] != 0)
+			{
+				return size;
+			}
+
+			size++; //increment count
+			land[row, col] = -1; //mark as visited
+
+			//size += DFS_Pond(land, row + 1, col); //south
+			//size += DFS_Pond(land, row - 1, col); //north
+			//size += DFS_Pond(land, row, col + 1); //east
+			//size += DFS_Pond(land, row, col - 1); //west
+
+			//size += DFS_Pond(land, row + 1, col - 1); //southwest
+			//size += DFS_Pond(land, row + 1, col + 1); //southeast
+			//size += DFS_Pond(land, row - 1, col - 1); //northwest
+			//size += DFS_Pond(land, row - 1, col + 1); //northeast
+
+			//goes through al 8 combinations.  
+			//will visit self again, but will ok as it will quit early anyway
+			for (int dr = -1; dr <= 1; dr++)
+			{
+				for (int dc = -1; dc <= 1; dc++){
+					size += DFS_Pond(land, row + dr, col + dc);
+				}
+			}
+
+			return size;
+		}
+		#endregion
+
+		#region T9 Phone
+		public static void T9Phone()
+		{
+			Console.WriteLine("given a string of digits, return all possible words");
+			Console.WriteLine("possible from a telephone");
+			Console.Write("Enter a number: ");
+			string number = Console.ReadLine(); 
+			//keep as string so that you can iterate through each char
+
+			T9Words(new StringBuilder(), number);
+			foreach (var word in words)
+			{
+				Console.WriteLine(word);
+			}
+		}
+		static HashSet<string> words = new HashSet<string>();
+		static Keypad keypad = new Keypad();
+
+		static void T9Words(StringBuilder perm, string number)
+		{
+			//done recursion
+			if (perm.Length == number.Length)
+			{
+				words.Add(perm.ToString());
+				return;
+			}
+
+			int level = perm.Length; //recursion level
+			foreach (var letter in keypad.GetLetters(number[level]))
+			{
+				var nextPerm = new StringBuilder(perm.ToString());
+				nextPerm.Append(letter);
+				T9Words(nextPerm, number);
+			}
+		}
+		#endregion
+
+		#region Sum Swap 
+		public static void SumSwap()
+		{
+			Console.WriteLine("given 2 arrays, find a number in each, that when swapped");
+			Console.WriteLine("both arrays sum to the same number");
+
+			int[] A = { 4, 1, 2, 1, 1, 2 };
+			int[] B = { 3, 6, 3, 3 };
+
+			int sumA = 0;
+			HashSet<int> numsA = SumAndSet(A, ref sumA);
+			int sumB = 0;
+			HashSet<int> numsB = SumAndSet(B, ref sumB);
+
+			if (sumA == sumB)
+			{
+				Console.WriteLine("Nothing to swap");
+			}
+			else {
+				int target = (sumA + sumB) / 2;
+				int offsetA = target - sumA;
+				//int offsetB = target - sumB;
+				foreach (var a in numsA)
+				{
+					int BtoA = a + offsetA;
+					//int AtoB = BtoA + offsetB;
+					if (numsB.Contains(BtoA))// && AtoB == a)
+					{
+						Console.WriteLine("Swap {0} and {1}", BtoA, a);
+					}
+				}
+			}
+		}
+
+		//returns both the sum of all elements and a hash set of all unique elements
+		static HashSet<int> SumAndSet(int[] arr, ref int sum)
+		{
+			var nums = new HashSet<int>();
+			foreach (int a in arr)
+			{
+				sum += a;
+				nums.Add(a);
+			}
+			return nums;
 		}
 		#endregion
 	}

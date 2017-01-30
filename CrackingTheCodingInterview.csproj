@@ -65,6 +65,11 @@
     <Compile Include="DataStructures\Line.cs" />
     <Compile Include="DataStructures\ObjectOrientedDesign.cs" />
     <Compile Include="DataStructures\PubSubPattern.cs" />
+    <Compile Include="OtherExamples\InterviewCake.cs" />
+    <Compile Include="DataStructures\Mastermind.cs" />
+    <Compile Include="DataStructures\Keypad.cs" />
+    <Compile Include="DataStructures\Meeting.cs" />
+    <Compile Include="DataStructures\UnfairCoin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inputFiles\input02.txt" />

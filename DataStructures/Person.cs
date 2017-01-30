@@ -1,5 +1,4 @@
-﻿using System;
-namespace DataStructures
+﻿namespace DataStructures
 {
 	public class Person
 	{

@@ -84,6 +84,7 @@ namespace CrackingTheCodingInterview
 		public static void RobotGrid()
 		{
 			Console.WriteLine("Question 9.2 - Robot Grid");
+			Console.WriteLine("Enter 2 integers separated by a space, for the grid dimensions");
 			string[] line1 = Console.ReadLine().Split(' ');
 			int x = Convert.ToInt32(line1[0]);
 			int y = Convert.ToInt32(line1[1]);
@@ -112,14 +113,54 @@ namespace CrackingTheCodingInterview
 
 		#region Magic Array Index
 		//given an sorted array, find magic index, where A[i] = i, if it exists
-		private static void Q9_3()
+		public static void MagicArray()
 		{
 			Console.WriteLine("Question 9.3 - Magic Array Index");
+			Console.WriteLine("Given an sorted array, find magic index, where A[i] = i, if it exists");
 			//int[] arr = { -1, 0, 1, 2, 4 };
+			int[] arr = { -1, 0, 1, 3, 5 };
+			//int[] arr = { -9, 1, 4, 6, 8 };
+			int magic = Q9_3(0, arr.Length - 1, arr);
+			Console.WriteLine("Magic Index: {0}", magic);
 			//do a modified binary search
 			//new left start is Math.Min(mid value, mid index - 1);
 			//new right start is Math.Max(mid value, mid index + 1);
 		}
+
+		/// <summary>
+		/// A modified binary search
+		/// </summary>
+		private static int Q9_3(int left, int right, int[] arr)
+		{
+			//check bounds
+			if (left > right)
+			{
+				return int.MinValue;
+			}
+			if (left == arr[left])
+			{
+				return left;
+			}
+			if (right == arr[right])
+			{
+				return right;
+			}
+
+			//modified binary search
+			int midInd = (left + right) / 2;
+			int midVal = arr[midInd];
+			if (midVal == midInd)
+			{
+				return midVal;
+			}
+			if (midVal < midInd)
+			{
+				return Q9_3(midInd + 1, right, arr); //search right
+			}
+
+			return Q9_3(left, midInd - 1, arr); //search left
+		}
+
 		#endregion
 
 		#region All Subsets of a Set
@@ -490,6 +531,53 @@ namespace CrackingTheCodingInterview
 				string right = paren.Substring(i, paren.Length - i);
 				set.Add(left + "()" + right);
 			}
+		}
+		#endregion
+
+		#region Making Change
+		public static void MakingChange()
+		{
+			Console.WriteLine("Given an infinite number of quarters, dimes, nickels, and pennies");
+			Console.WriteLine("find the number of ways to represent n cents.");
+			Console.Write("Enter n: ");
+			int n = 0;
+			while (!int.TryParse(Console.ReadLine(), out n)){
+				Console.Write("Invalid integer, try again: ");
+			}
+
+			Console.WriteLine("{0} ways to make change for {1}", Q8_11(n), n);
+		}
+
+		private static int Q8_11(int n)
+		{
+			int[] coins = { 25, 10, 5, 1 };
+			int[,] memo = new int[n + 1, coins.Length]; //memo table
+			return Q8_11(n, coins, 0, memo);
+		}
+
+		private static int Q8_11(int amount, int[] coins, int index, int[,] memo)
+		{
+			//check memo table for answer
+			if (memo[amount, index] > 0){
+				return memo[amount, index];
+			}
+
+			if (index >= coins.Length - 1)
+			{
+				return 1; //last coin
+			}
+			int ways = 0;
+			int coin = coins[index];
+			for (int i = 0; i * coin <= amount; i++)
+			{
+				int amountRemaining = amount - (i * coin);
+				ways += Q8_11(amountRemaining, coins, index + 1, memo);
+			}
+			memo[amount, index] = ways; //save in memo table!
+			//building up ways as we go down list of coins
+			//only care about the last number in the bottom right corner of memo
+
+			return ways;
 		}
 		#endregion
 	}

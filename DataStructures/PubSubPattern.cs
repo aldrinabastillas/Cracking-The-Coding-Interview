@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CrackingTheCodingInterview
+namespace DataStructures
 {
 	public class CustomEvent<T> : EventArgs
 	{
